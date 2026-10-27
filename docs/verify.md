@@ -110,3 +110,16 @@ inbox 条目原文：
 ```
 
 第 2 步用 `--dry-run`，只校验不写入，所以 inbox 里只有第 3 步自动追加的那一条。`BRAIN_ROOT` 指向临时目录，脚本没有碰机器上原有的记忆库。
+
+## 共用插件：同步给所有 AI
+
+2026-10-27 在临时目录按 [install.md](install.md) 第 2 步测试。测试时把脚本的家目录指到临时目录，结果如下：
+
+| 场景 | 输出 | 退出码 |
+|---|---|---|
+| 首次同步四个技能 | 4 条 `UPDATE`，4 条 `LINK claude`；`~/.agents/skills` 有 4 个技能，`~/.claude/skills` 4 个软链接指向它们 | 0 |
+| 大脑 `skills/` 里新放一个技能再同步 | `UPDATE hello-shared`、`LINK claude hello-shared` | 0 |
+| 再跑一次 | `brain skills: no change（5 个已是最新）` | 0 |
+| 直接改了 `~/.agents/skills` 下的副本 | `DRIFT hello-shared … 未覆盖` | 5 |
+| 撤销改动，从大脑删掉这个技能 | `REMOVE hello-shared`，软链接一起删 | 0 |
+| 本机已有同名、不是大脑装的技能 | `SKIP my-own … 未覆盖` | 0 |

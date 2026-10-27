@@ -14,5 +14,6 @@ title: brain 公共记忆库
 | user/PREFERENCES.md | 用户偏好 | 汇总者 |
 | artifacts/ | 产物库与索引 INDEX.md | 各 agent，只经 brain-note 存档模式 |
 | _meta/PENDING.md | 待你裁定的事项 | 汇总者 |
+| skills/ | 几个 AI 共用的插件（技能），规矩见 skills/README.md | 你，或按规矩装插件的 AI |
 
 读：brain-load。写：brain-note。找回产物：brain-find。汇总者是你，或拿着 ai-brain-starter 里 `prompts/manual-merge.md` 的任意一个 AI。

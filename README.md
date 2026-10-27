@@ -18,12 +18,18 @@
 
 几台电脑共用一份大脑，把「~/brain」换成 iCloud 之类会同步的文件夹。
 
+以后给几个 AI 装新插件，对任何一个说：
+
+> 把 <技能地址或名字> 装成几个 AI 共用。
+
+技能放在大脑的 `skills/` 里，装一次，Claude Code、Codex、Hermes 都能用，规矩见 `brain-template/skills/README.md`。
+
 ## 手动安装
 
 三步安装（细节见 [docs/install.md](docs/install.md)）：
 
-1. 复制 `skills/` 下四个目录到 `~/.claude/skills/`（Codex 是 `~/.codex/skills/`）。
-2. 复制 `brain-template/` 到你放记忆库的地方，`export BRAIN_ROOT=<那个目录>`、`export BRAIN_MACHINE=<本机名>`。
+1. 复制 `brain-template/` 到你放记忆库的地方，`export BRAIN_ROOT=<那个目录>`、`export BRAIN_MACHINE=<本机名>`。
+2. 把 `skills/` 下四个目录放进大脑的 `skills/`，运行 `brain_materialize.py` 同步给所有 AI。
 3. 把 `prompts/instruction-block.md` 贴进 `~/.claude/CLAUDE.md` 或 `~/.codex/AGENTS.md`，改占位符，新开会话说「开工」。
 
 仓库内容：`skills/` 四个技能，`brain-template/` 空记忆库，`prompts/` 指令块、开工简报模板、条目格式、人工汇总提示词，`docs/` 安装与验证记录。
