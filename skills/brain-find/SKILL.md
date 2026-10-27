@@ -6,7 +6,7 @@ description: 从公共记忆库 brain 的产物库找回之前任一 agent 存�
 # brain-find
 
 产物库在 `brain/artifacts/`，索引是 `artifacts/INDEX.md`，由各 agent 经 brain-note 的存档模式写入。本技能只查、核实、交付。
-脚本在本技能目录的 `scripts/` 下，下文写作 `<技能目录>`（Claude Code 一般是 `~/.claude/skills/brain-find`，Codex 是 `~/.codex/skills/brain-find`）。Windows 用 `python` 代替 `python3`。
+脚本在本技能目录的 `scripts/` 下，下文写作 `<技能目录>`（装好后在 `~/.agents/skills/brain-find`，Claude Code 经软链接也能从 `~/.claude/skills/brain-find` 找到）。Windows 用 `python` 代替 `python3`。
 
 ## 步骤
 

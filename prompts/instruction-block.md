@@ -3,7 +3,7 @@
 把下面两段贴进 Claude Code 的 `~/.claude/CLAUDE.md` 或 Codex 的 `~/.codex/AGENTS.md`（放项目级文件也行），再把占位符改成你的值：
 
 - `<BRAIN_ROOT>`：brain 根目录的绝对路径
-- `<机器>`：本机在 MAP.md「机器」表里的名字（或 `BRAIN_MACHINE` 的值）
+- `<机器>`：本机机器名，即 `~/.config/brain/machine` 里写的名字
 - `<agent>`：本 agent 标识，`claude-code` 或 `codex`
 
 Codex 用 `$名称` 引用技能：把「brain-load 技能」写成 `$brain-load`，其余同理。
@@ -27,4 +27,4 @@ Codex 用 `$名称` 引用技能：把「brain-load 技能」写成 `$brain-load
 5. 不写密钥、token、密码、带凭证的链接。
 6. 写进 inbox 的结论标来源等级：工具实测、用户告知、推断。产物先核实再写；「更正」带根因；「假设」带验证方法和到期日。
 7. 你自己的记忆功能只当缓存；与 STATUS 冲突时以 STATUS 为准，并在下次 brain-note 里记一条更正。
-8. 装任何技能（插件）都默认装成几个 AI 共用：按 <BRAIN_ROOT>/skills/README.md 放进 <BRAIN_ROOT>/skills/<名称>/，再运行 python3 -B <BRAIN_ROOT>/skills/brain-note/scripts/brain_materialize.py 同步给所有 AI（这是第 4 条的例外）。不要只装进某一个 AI 的私有目录，也不要直接改 ~/.agents/skills 下的副本。
+8. 装任何技能（插件）都默认装成几个 AI 共用：按 <BRAIN_ROOT>/skills/README.md 放进 <BRAIN_ROOT>/skills/<名称>/，再运行 python3 -B "<BRAIN_ROOT>/skills/brain-note/scripts/brain_materialize.py" 同步给所有 AI（这是第 4 条的例外）。不要只装进某一个 AI 的私有目录，也不要直接改 ~/.agents/skills 下的副本。

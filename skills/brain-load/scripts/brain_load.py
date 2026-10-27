@@ -13,6 +13,12 @@ sys.dont_write_bytecode = True
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import brain_common as bc  # noqa: E402
 
+LOOKBACK_DAYS = 14  # shortcut: 没汇总过只回看 14 天；更早的要先用 manual-merge 折进 STATUS
+
+
+def days_since(start, today):
+    return [start + datetime.timedelta(days=i) for i in range((today - start).days + 1)]
+
 
 def frontmatter_value(text, key):
     m = re.search(r"^---\n(.*?)\n---", text, re.S)
@@ -34,7 +40,7 @@ def inbox_entries(root, pid, days):
             if any(part.startswith("_") for part in f.relative_to(base).parts):
                 continue
             for e in bc.split_entries(bc.read_text(f)):
-                if e["project_field"].startswith("项目：") and bc.canonical_project(root, e["project_field"]) == pid:
+                if e["project_field"].startswith("项目：") and (pid is None or bc.canonical_project(root, e["project_field"]) == pid):
                     out.append(e)
     out.sort(key=lambda e: e["time"])
     return out
@@ -75,6 +81,13 @@ def main():
     print("根目录：%s｜本机：%s｜今天：%s" % (root, machine, today.isoformat()))
     if not pid:
         print("项目：未绑定（%s）" % basis)
+        latest = {}
+        for e in inbox_entries(root, None, days_since(today - datetime.timedelta(days=LOOKBACK_DAYS), today)):
+            latest[bc.canonical_project(root, e["project_field"])] = e  # 按时间排好，后写的覆盖
+        latest.pop(None, None)
+        print("\n## 最近有记录的项目（新的在前）")
+        rows = sorted(latest.items(), key=lambda kv: kv[1]["time"], reverse=True)[:8]
+        print("\n".join("- %s · 最近一条 %s · 来源 %s" % (p, e["time"], e["source"]) for p, e in rows) or "（无）")
         print("\n## 最近项目（INDEX 前 8 行）")
         for row in bc.index_rows(root)[:8]:
             print("- " + " | ".join(row))
@@ -94,8 +107,13 @@ def main():
 
     print("\n## 已确认偏好\n" + (pref_text or "（无）"))
 
-    entries = inbox_entries(root, pid, [today - datetime.timedelta(days=1), today])
-    print("\n## 最近两天 inbox 条目（%d 条；STATUS generated=%s）" % (len(entries), generated or "无"))
+    start = today - datetime.timedelta(days=LOOKBACK_DAYS)
+    try:
+        start = max(start, datetime.date.fromisoformat(generated[:10]))
+    except ValueError:
+        pass
+    entries = inbox_entries(root, pid, days_since(start, today))
+    print("\n## 尚未汇总的 inbox 条目（%d 条，自 %s 起；STATUS generated=%s）" % (len(entries), start.isoformat(), generated or "无"))
     for e in entries:
         merged = generated and e["time"] <= generated[:16]
         print("\n" + ("【STATUS 生成前已有】" if merged else "【尚未合并】"))

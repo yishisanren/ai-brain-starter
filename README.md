@@ -14,7 +14,7 @@
 
 只想要开工简报：
 
-> 帮我从 github.com/yishisanren/ai-brain-starter 只装 skills/goal-alignment 这一个技能，装好后告诉我怎么用。
+> 帮我从 github.com/yishisanren/ai-brain-starter 只装开工简报：按 docs/install.md「只装开工简报」一节装好，告诉我怎么用。
 
 几台电脑共用一份大脑，把「~/brain」换成 iCloud 之类会同步的文件夹。
 
@@ -28,7 +28,7 @@
 
 三步安装（细节见 [docs/install.md](docs/install.md)）：
 
-1. 复制 `brain-template/` 到你放记忆库的地方，`export BRAIN_ROOT=<那个目录>`、`export BRAIN_MACHINE=<本机名>`。
+1. 复制 `brain-template/` 到你放记忆库的地方，把那个目录写进 `~/.config/brain/root`，本机名写进 `~/.config/brain/machine`。
 2. 把 `skills/` 下四个目录放进大脑的 `skills/`，各个 AI 原来装的技能也搬进去（见 [docs/share-skills.md](docs/share-skills.md)），运行 `brain_materialize.py` 同步给所有 AI。
 3. 把 `prompts/instruction-block.md` 贴进 `~/.claude/CLAUDE.md` 或 `~/.codex/AGENTS.md`，改占位符，新开会话说「开工」。
 

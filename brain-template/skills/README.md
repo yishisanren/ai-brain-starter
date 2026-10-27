@@ -24,7 +24,7 @@
 
 1. 拿到技能文件夹，先读一遍 `SKILL.md` 和里面的脚本，告诉你它会做什么。
 2. 确认文件夹名和 `SKILL.md` 的 `name` 一致，放进本目录 `<名称>/`。
-3. 运行 `python3 -B <BRAIN_ROOT>/skills/brain-note/scripts/brain_materialize.py`。
+3. 运行 `python3 -B "<BRAIN_ROOT>/skills/brain-note/scripts/brain_materialize.py"`。
 4. 把脚本输出给你看。新开会话后各个 AI 都能用。
 
 ## 规矩

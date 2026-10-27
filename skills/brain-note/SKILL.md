@@ -5,7 +5,7 @@ description: 把当前项目状态写成条目，追加到公共记忆库 brain 
 
 # brain-note
 
-脚本在本技能目录的 `scripts/` 下，下文写作 `<技能目录>`（Claude Code 一般是 `~/.claude/skills/brain-note`，Codex 是 `~/.codex/skills/brain-note`）。Windows 用 `python` 代替 `python3`。
+脚本在本技能目录的 `scripts/` 下，下文写作 `<技能目录>`（装好后在 `~/.agents/skills/brain-note`，Claude Code 经软链接也能从 `~/.claude/skills/brain-note` 找到）。Windows 用 `python` 代替 `python3`。
 写条目前先读 `references/entry-format.md`。
 
 ## 手动模式（默认）
@@ -21,7 +21,7 @@ description: 把当前项目状态写成条目，追加到公共记忆库 brain 
    EOF
    ```
 
-   `<机器>` 是本机在 MAP.md「机器」表里的名字（或环境变量 `BRAIN_MACHINE` 的值），`--agent` 与来源里的 agent 必须一致。
+   `<机器>` 是本机机器名（`~/.config/brain/machine` 里写的名字），`--agent` 与来源里的 agent 必须一致。
 4. 退出码：0 成功；2 格式或来源错误，按 detail 改后重试；3 含疑似密钥，删掉那几行再试；4 回读不一致，如实告诉用户。返回 JSON 的 `warnings` 里出现「相似」「别名」「不必标（新）」：说明项目 id 该复用已有的；正式写入前先加 `--dry-run` 跑一遍看这些提示，改好 id 再写，写入后再改会造成重复条目。
 5. 成功后把追加的条目原样给用户看，并说写进了哪个文件。
 

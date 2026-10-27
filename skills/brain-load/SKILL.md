@@ -1,11 +1,11 @@
 ---
 name: brain-load
-description: 开工时读取公共记忆库 brain 中当前项目的状态、最近两天未合并的条目、用户偏好，输出开工简报。用户说「开工」「读一下项目状态」「接着上次做」「brain-load」，或在某个项目里开始实质工作之前使用。只读。
+description: 开工时读取公共记忆库 brain 中当前项目的状态、尚未汇总的条目、用户偏好，输出开工简报。用户说「开工」「读一下项目状态」「接着上次做」「brain-load」，或在某个项目里开始实质工作之前使用。只读。
 ---
 
 # brain-load
 
-脚本在本技能目录的 `scripts/` 下，下文写作 `<技能目录>`（Claude Code 一般是 `~/.claude/skills/brain-load`，Codex 是 `~/.codex/skills/brain-load`）。Windows 用 `python` 代替 `python3`。
+脚本在本技能目录的 `scripts/` 下，下文写作 `<技能目录>`（装好后在 `~/.agents/skills/brain-load`，Claude Code 经软链接也能从 `~/.claude/skills/brain-load` 找到）。Windows 用 `python` 代替 `python3`。
 
 ## 步骤
 
@@ -35,7 +35,9 @@ description: 开工时读取公共记忆库 brain 中当前项目的状态、最
 
    没有内容的行删掉。
 
-3. 输出「项目：未绑定」时：一句话说明本次尚未绑定项目，工作内容明确后由 brain-note 按内容命名；附脚本列出的最近项目。不追问。
+3. 输出「项目：未绑定」时：
+   - 用户只说「开工」「接着上次做」、没说做什么：取「最近有记录的项目」第一行，加 `--project <它>` 重跑一次，按步骤 2 写简报，第一行注明「按最近一条记录接上」。用户说不是这个，再换。
+   - 用户说了要做的新事：一句话说明本次尚未绑定项目，工作内容明确后由 brain-note 按内容命名；附脚本列出的最近项目。不追问。
 4. 然后开始工作。不读 history，不复述整份 STATUS。
 
 ## 约束

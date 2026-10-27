@@ -128,3 +128,19 @@ inbox 条目原文：
 | 把这个原文件夹移到备份后再同步 | `LINK claude keep-old` | 0 |
 | 同一个技能在 Claude Code 和 Codex 里各装一份、内容相同：只放一份进大脑，两份原文件夹都移到备份 | `UPDATE dup-same`、`LINK claude dup-same`；备份里两份都在 | 0 |
 | 同名但两份内容不同，选了 Codex 那份放进大脑，两份原文件夹都移到备份 | `UPDATE dup-diff`、`LINK claude dup-diff`；共用目录里是 Codex 那份，备份里两份都在 | 0 |
+
+## 全新电脑：从安装到换 AI 接着干
+
+2026-10-27 模拟一台新 Mac：自带的 Python 3.9.6，家目录换成临时目录，环境里没有 `BRAIN_ROOT`、`BRAIN_MACHINE`。按 [install.md](install.md) 原样执行，每段命令单独开一个 shell（AI 执行命令就是这样）。大脑分别放在 `~/brain` 和带空格的 iCloud 路径 `~/Library/Mobile Documents/com~apple~CloudDocs/obsidian/4-助理/brain`，两遍结果相同：
+
+| 场景 | 结果 |
+|---|---|
+| 第 1、2 步建大脑、同步技能 | 4 条 `UPDATE`，4 条 `LINK claude` |
+| 自检（去掉环境变量跑，模拟桌面 app） | 输出大脑目录和机器名 `work-mac` |
+| Claude Code「记一下状态」，项目 iot-weekly | 写入 `inbox/work-mac/claude-code/` |
+| Codex 只说「开工」，当前目录没有映射 | 「最近有记录的项目」第一行是 iot-weekly，AI 据此加 `--project` 重跑 |
+| 加 `--project iot-weekly` | 读到 Claude Code 写的「下一步：修周环比公式」 |
+| 这条记录是 3 天前写的，还没汇总 | 仍然读得到，「开工」也仍然接到 iot-weekly |
+| 项目已有 STATUS（昨天生成） | 只读昨天以后的条目，汇总过的不重复 |
+| 记录是 20 天前写的，没汇总 | 读不到，需要先用 manual-merge 折进 STATUS |
+| 指令块第 8 条的同步命令，填入带空格的路径 | 正常运行 |

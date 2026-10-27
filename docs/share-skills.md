@@ -13,8 +13,9 @@
 还没有大脑的，先按 install.md 第 1 步建好。然后把本仓库的技能放进大脑，同步脚本在 brain-note 里：
 
 ```bash
-mkdir -p "$BRAIN_ROOT/skills" ~/.claude/skills
-cp -R ai-brain-starter/skills/* "$BRAIN_ROOT/skills/"
+B="$(cat ~/.config/brain/root)"
+mkdir -p "$B/skills" ~/.claude/skills
+cp -R ai-brain-starter/skills/* "$B/skills/"
 ```
 
 ## 第 2 步：盘点本机的 agent
@@ -72,13 +73,13 @@ skills:
 
 1. 列出清单给用户看：名字、在哪几个 AI 里、几份内容是否相同。第三方技能先读 `SKILL.md` 和脚本，说清它会做什么。
 2. 同名且内容相同的（整个文件夹逐个文件比对），只留一份放进大脑；同名但内容不同的，列出来等用户选一份，不自己挑。
-3. 选定的放进 `$BRAIN_ROOT/skills/<名称>/`，文件夹名和 `SKILL.md` 的 `name` 一致。
+3. 选定的放进大脑的 `skills/<名称>/`，文件夹名和 `SKILL.md` 的 `name` 一致。
 4. 原来的文件夹移到 `~/skills-backup-<日期>/<AI>/<名称>/`，不直接删。一定要移走：`~/.agents/skills/` 里留着同名的，同步会报 `SKIP`；`~/.claude/skills/` 里留着同名的，同步不报错，但 Claude Code 会一直用旧的那份。
 
 ## 第 4 步：同步，再查一遍
 
 ```bash
-python3 -B "$BRAIN_ROOT/skills/brain-note/scripts/brain_materialize.py"
+python3 -B "$(cat ~/.config/brain/root)/skills/brain-note/scripts/brain_materialize.py"
 ```
 
 每个技能出一行 `UPDATE`，Claude Code 再出一行 `LINK claude`。缺 `LINK claude` 或者有 `SKIP` 的，对应目录里还有旧文件夹没移走，回到第 3 步。
@@ -90,7 +91,7 @@ python3 -B "$BRAIN_ROOT/skills/brain-note/scripts/brain_materialize.py"
 `~/.claude/CLAUDE.md`、`~/.codex/AGENTS.md` 里要有这一条（装了全套的，[instruction-block.md](../prompts/instruction-block.md) 第 8 条已经有了）：
 
 ```
-装任何技能（插件）都默认装成几个 AI 共用：按 <BRAIN_ROOT>/skills/README.md 放进 <BRAIN_ROOT>/skills/<名称>/，再运行 python3 -B <BRAIN_ROOT>/skills/brain-note/scripts/brain_materialize.py 同步给所有 AI。不要只装进某一个 AI 的私有目录，也不要直接改 ~/.agents/skills 下的副本。
+装任何技能（插件）都默认装成几个 AI 共用：按 <BRAIN_ROOT>/skills/README.md 放进 <BRAIN_ROOT>/skills/<名称>/，再运行 python3 -B "<BRAIN_ROOT>/skills/brain-note/scripts/brain_materialize.py" 同步给所有 AI。不要只装进某一个 AI 的私有目录，也不要直接改 ~/.agents/skills 下的副本。
 ```
 
 ## 之后
