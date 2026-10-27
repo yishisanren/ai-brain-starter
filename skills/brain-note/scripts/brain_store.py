@@ -3,7 +3,7 @@
 
 用户说「存一下」「保存起来」「保存这些」时由 agent 调用。文件复制后回读 md5 校验；目录先打成 zip；云文档只记链接。
 用法：
-  python3 -B brain_store.py --agent claude-code|codex --project <id或别名> --title "<一句人话标题>" \
+  python3 -B brain_store.py --agent claude-code|codex|hermes --project <id或别名> --title "<一句人话标题>" \
       [--note "<备注>"] [--session <会话id>] [--dry-run] <路径> [<路径> ...]
   python3 -B brain_store.py --agent ... --project <id> --title "<标题>" --link <URL>
 退出码：0 成功；2 参数、项目 id 或格式错误；3 文本文件或链接含疑似密钥（未写入）；4 复制或回读校验失败。
@@ -188,6 +188,8 @@ def main():
     rows = index_rows(root)
     art_dir = root / "artifacts"
     source = "%s/%s" % (machine, a.agent)
+    if a.agent == "hermes" and a.session and ":" in a.session:
+        source, a.session = "%s/hermes:%s" % (machine, a.session.split(":")[0]), a.session.split(":", 1)[1]
     plan = []  # 每个待入库对象
 
     if a.link:

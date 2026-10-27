@@ -4,7 +4,7 @@
 
 - `<BRAIN_ROOT>`：brain 根目录的绝对路径
 - `<机器>`：本机机器名，即 `~/.config/brain/machine` 里写的名字
-- `<agent>`：本 agent 标识，`claude-code` 或 `codex`
+- `<agent>`：本 agent 标识，`claude-code`、`codex` 或 `hermes`
 
 Codex 用 `$名称` 引用技能：把「brain-load 技能」写成 `$brain-load`，其余同理。
 
@@ -23,7 +23,7 @@ Codex 用 `$名称` 引用技能：把「brain-load 技能」写成 `$brain-load
 1. 在某个项目里开始实质工作前，先运行 brain-load 技能，按它的开工简报继续。纯问答不用运行。STATUS「已更正」里列出的旧结论不要再用。
 2. 项目名：我在会话里说了就用我说的；没说按 MAP 目录映射；都没有就根据内容总结一个小写连字符 id，不用问我。
 3. 我说「记一下状态」就运行 brain-note 技能的手动模式，写完把追加的条目原样给我看。我说「存一下」「保存起来」「保存这些」就运行 brain-note 技能的存档模式，把文件存进 brain/artifacts/ 并把返回的产物行给我看。我说「把之前存的 X 发我」「找一下之前那个 X」就运行 brain-find 技能：先查 brain/artifacts/INDEX.md，核实后按本渠道发文件或链接。
-4. 只通过 brain-note 的脚本写 inbox/<机器>/<agent>/ 和 artifacts/（含 artifacts/INDEX.md）。brain 下其他文件一律不改。
+4. 只通过 brain-note 的脚本写 inbox/<机器>/<agent>/ 和 artifacts/（含 artifacts/INDEX.md）。brain 下其他文件一律不改。例外：在 brain 日汇总、周总结、月度归纳的定时任务会话里（提示词以 #brain-merge 开头），按 brain-merge 技能写 projects/、lessons/、user/、_meta/ 和 inbox/_sensitive/。
 5. 不写密钥、token、密码、带凭证的链接。
 6. 写进 inbox 的结论标来源等级：工具实测、用户告知、推断。产物先核实再写；「更正」带根因；「假设」带验证方法和到期日。
 7. 你自己的记忆功能只当缓存；与 STATUS 冲突时以 STATUS 为准，并在下次 brain-note 里记一条更正。

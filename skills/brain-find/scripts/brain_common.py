@@ -2,7 +2,7 @@
 """brain 公共函数（仅标准库，兼容 Python 3.9+；macOS / Linux / Windows）。
 
 定位根目录、识别本机、解析 MAP / INDEX、条目格式、时间窗、密钥检测、会话摘要渲染、
-同机写锁、原子写入、skill bundle hash。brain-load、brain-note、brain-find 三处副本内容必须一致。
+同机写锁、原子写入、skill bundle hash。brain-load、brain-note、brain-find、brain-merge 四处副本内容必须一致。
 """
 import datetime
 import hashlib
@@ -31,7 +31,7 @@ HOME = real_home()
 CFG_DIR = HOME / ".config" / "brain"
 STATE_DIR = HOME / ".local" / "state" / "brain"
 SKILLS_DEST = HOME / ".agents" / "skills"
-AGENTS = ("claude-code", "codex")
+AGENTS = ("claude-code", "codex", "hermes")
 TIME_FMT = "%Y-%m-%d %H:%M"
 PLACEHOLDERS = ("", "—", "-", "待填")
 SLUG_RE = re.compile(r"^[a-z0-9][a-z0-9-]{1,62}$")

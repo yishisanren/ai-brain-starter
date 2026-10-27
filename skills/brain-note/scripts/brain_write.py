@@ -2,21 +2,24 @@
 """brain_write：把条目追加到 inbox/<本机>/<agent>/<今天>.md。
 
 校验标题行、来源、项目字段、密钥；同机加锁；原子写入；回读校验。
-用法：python3 -B brain_write.py --agent claude-code|codex [--file 条目.md]（省略则读标准输入）[--dry-run]
+用法：python3 -B brain_write.py --agent claude-code|codex|hermes [--file 条目.md]（省略则读标准输入）[--dry-run]
 退出码：0 成功；2 格式或来源错误；3 含疑似密钥（原文未写入）；4 回读不一致。
 """
 import argparse
 import datetime
 import json
 import os
+import re
 import sys
 
 sys.dont_write_bytecode = True
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import brain_common as bc  # noqa: E402
+import brain_verify  # noqa: E402
 
 SPECIAL_FIELDS = ("无项目工作",)
 SPECIAL_PREFIXES = ("会话记录不可读", "日结失败")
+ARTIFACT_PATH_RE = re.compile(r"\|\s*([a-z0-9-]+):(/[^（|]+)")
 
 
 def fail(code, **info):
@@ -58,6 +61,19 @@ def project_id_warnings(key, field, known, aliases):
     return out
 
 
+def artifact_error(line, machine):
+    """「产物：[文件]」行必须写 brain_verify 核实结果；本机路径当场再用 brain_verify 实测存在。入库行由 brain_store 生成，不查。"""
+    s = line.strip()
+    if not s.startswith("- 产物：[文件]") or "brain_store" in s:
+        return None
+    if "brain_verify" not in s:
+        return "产物行没有 brain_verify 核实结果：先运行 brain_verify.py <路径>，按输出写「（未入库；brain_verify 核实 <大小> <修改时间>）」；会话记录、ls、摘要列出都不能代替"
+    m = ARTIFACT_PATH_RE.search(s)
+    if m and m.group(1) == machine and not brain_verify.inspect(m.group(2).strip())["exists"]:
+        return "产物路径不存在（brain_verify 实测）：%s" % m.group(2).strip()
+    return None
+
+
 def main():
     ap = argparse.ArgumentParser(description="追加 brain 条目")
     ap.add_argument("--agent", required=True, choices=bc.AGENTS)
@@ -97,11 +113,17 @@ def main():
         n = len([ln for ln in e["body"].splitlines() if ln.strip()])
         if n > 25:
             warnings.append("「%s」正文 %d 行，超过 25 行上限" % (field[:40], n))
+    art_bad = []
+    for i, ln in enumerate(text.splitlines(), 1):
+        msg = artifact_error(ln, machine)
+        if msg:
+            errors.append("第 %d 行%s" % (i, msg))
+            art_bad.append(i)
     bad = bc.secret_lines(text)
     if bad:
         fail(3, error="secret", lines=bad, detail="这些行疑似含密钥或凭证，删掉后重试；原文未写入")
     if errors:
-        fail(2, error="format", detail=errors)
+        fail(2, error="format", detail=errors, artifact_lines=art_bad)
 
     target = root / "inbox" / machine / a.agent / (today.isoformat() + ".md")
     if a.dry_run:

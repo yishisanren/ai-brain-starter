@@ -29,6 +29,7 @@ description: 从公共记忆库 brain 的产物库找回之前任一 agent 存�
    |---|---|
    | Claude Code | 用发文件工具把 `abs_path` 发给用户；链接类回标题 + URL |
    | Codex | 没有发文件通道：回绝对路径，mac 上再运行 `open -R "<abs_path>"` 在 Finder 里选中它 |
+   | Hermes | 用所在聊天渠道的发文件能力把 `abs_path` 发到当前会话；不可用时回路径。链接类直接发 URL |
 
    交付时附一句：id、产出日期、来源 agent、备注里的版本说明。
 

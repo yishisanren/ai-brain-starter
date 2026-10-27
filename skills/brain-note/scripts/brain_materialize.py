@@ -4,7 +4,7 @@
 - 只管理自己物化过的技能（台账 ~/.local/state/brain/materialized.json）；同名的非 brain 技能不覆盖。
 - skill.lock.json 的 targets.machines 限定目标机器；本机不在列表内则不安装，已装的移除。
 - 按 bundle hash（shared-skill-bundle-v2）判断是否更新；暂存目录复制并校验后原子切换。
-- Claude Code 在 ~/.claude/skills/ 建相对软链，失败时复制；Codex 直接读 ~/.agents/skills。
+- Claude Code 在 ~/.claude/skills/ 建相对软链，失败时复制；Codex、Hermes 直接读 ~/.agents/skills。
 用法：python3 -B brain_materialize.py [--dry-run]
 """
 import argparse

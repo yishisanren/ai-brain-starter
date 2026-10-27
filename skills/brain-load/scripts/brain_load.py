@@ -12,8 +12,9 @@ import sys
 sys.dont_write_bytecode = True
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import brain_common as bc  # noqa: E402
+import brain_watchdog  # noqa: E402
 
-LOOKBACK_DAYS = 14  # shortcut: 没汇总过只回看 14 天；更早的要先用 manual-merge 折进 STATUS
+LOOKBACK_DAYS = 14  # shortcut: 没汇总过只回看 14 天；更早的要靠日汇总折进 STATUS
 
 
 def days_since(start, today):
@@ -65,6 +66,43 @@ def table_rows(path):
     return rows
 
 
+SCOPE_RE = re.compile(r"范围：([a-z0-9][a-z0-9-]*)")
+
+
+def scoped_prefs(root, text, pid):
+    """只留全局、按主题和本项目的偏好；范围是别的项目 id 的略去。返回 (文本, 略去条数)。"""
+    known = bc.known_projects(root)
+    keep, skipped = [], 0
+    for line in text.splitlines():
+        m = SCOPE_RE.search(line)
+        cid = bc.canonical_project(root, m.group(1)) if m else None
+        if cid and cid in known and cid != pid:
+            skipped += 1
+            continue
+        keep.append(line)
+    return re.sub(r"\n{3,}", "\n\n", "\n".join(keep)).strip(), skipped
+
+
+def lesson_field(block, name):
+    m = re.search(r"^- %s：(.*)$" % name, block, re.M)
+    return m.group(1).strip() if m else ""
+
+
+def project_lessons(root, pid, cap=5):
+    """本项目经验：projects/<id>/LESSONS.md 加通用库里来源是本项目的；跳过已失效，按 id 取最新 cap 条。"""
+    blocks = []
+    for path, own in ((root / "projects" / pid / "LESSONS.md", True), (root / "lessons" / "LESSONS.md", False)):
+        if not path.is_file():
+            continue
+        for b in re.split(r"\n(?=### L-)", bc.read_text(path)):
+            if not b.startswith("### L-") or "已失效" in lesson_field(b, "状态"):
+                continue
+            if own or "（项目 %s）" % pid in lesson_field(b, "来源"):
+                blocks.append(b)
+    blocks.sort(key=lambda b: b.split()[1])
+    return blocks[-cap:]
+
+
 def main():
     ap = argparse.ArgumentParser(description="brain 开工材料")
     ap.add_argument("--project", default="")
@@ -76,9 +114,14 @@ def main():
     pid, basis = bc.resolve_project(root, machine, a.project or None, a.cwd or os.getcwd())
     prefs = root / "user" / "PREFERENCES.md"
     pref_text = bc.section_text(bc.read_text(prefs), "已确认") if prefs.is_file() else ""
+    pref_text, pref_skipped = scoped_prefs(root, pref_text, pid)
+    pref_title = "\n## 已确认偏好（全局与本项目；其他项目范围的 %d 条已略）\n" % pref_skipped
 
     print("# brain-load 材料")
     print("根目录：%s｜本机：%s｜今天：%s" % (root, machine, today.isoformat()))
+    alerts = brain_watchdog.problems(root, machine)
+    if alerts:
+        print("\n## 自动运行提醒（简报里照实告诉用户）\n" + "\n".join("- " + a for a in alerts))
     if not pid:
         print("项目：未绑定（%s）" % basis)
         latest = {}
@@ -91,7 +134,7 @@ def main():
         print("\n## 最近项目（INDEX 前 8 行）")
         for row in bc.index_rows(root)[:8]:
             print("- " + " | ".join(row))
-        print("\n## 已确认偏好\n" + (pref_text or "（无）"))
+        print(pref_title + (pref_text or "（无）"))
         return
 
     print("项目：%s（依据：%s）" % (pid, basis))
@@ -105,7 +148,19 @@ def main():
     else:
         print("（尚无 STATUS.md：该项目还没有汇总过）")
 
-    print("\n## 已确认偏好\n" + (pref_text or "（无）"))
+    print(pref_title + (pref_text or "（无）"))
+
+    print("\n## 本项目经验（最新 5 条，已失效的不列）")
+    lessons = project_lessons(root, pid)
+    print("\n".join("- %s · %s → %s（%s，出现 %s）" % (
+        b.split()[1], lesson_field(b, "场景"), lesson_field(b, "做法"), lesson_field(b, "状态"), lesson_field(b, "出现").split("（")[0])
+        for b in lessons) or "（无）")
+
+    # 近 30 天的更正已在 STATUS「已更正」段，这里补掉出 STATUS 的更早偏差
+    cutoff = (today - datetime.timedelta(days=30)).isoformat()
+    print("\n## 本项目更早的偏差（30 天前，最近 5 条）")
+    old = [r for r in table_rows(root / "lessons" / "CORRECTIONS.md") if len(r) >= 8 and r[2] == pid and r[1][:10] < cutoff]
+    print("\n".join("- %s · %s · %s：%s → %s（根因：%s）" % (r[0], r[1], r[3], r[4], r[6], r[5]) for r in old[-5:]) or "（无）")
 
     start = today - datetime.timedelta(days=LOOKBACK_DAYS)
     try:

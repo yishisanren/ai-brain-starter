@@ -1,6 +1,6 @@
 # 安装
 
-三步装完。需要 Python 3.9 以上和 git，不装任何第三方包。技能只装一份，Claude Code、Codex、Hermes 共用。
+四步装完：建大脑、接通共用技能、贴指令块、建定时任务。需要 Python 3.9 以上和 git，不装任何第三方包。技能只装一份，Claude Code、Codex、Hermes 共用。
 
 新 Mac 第一次运行 `git` 或 `python3` 会弹窗要求安装「命令行开发者工具」。AI 看到这类报错时，请用户在弹窗里点「安装」，装完再继续。
 
@@ -50,7 +50,9 @@ skills:
 
 把 `prompts/instruction-block.md` 里的两段贴进 `~/.claude/CLAUDE.md`（Codex 是 `~/.codex/AGENTS.md`），把 `<BRAIN_ROOT>`、`<机器>`、`<agent>` 改成你的值。两个 AI 都用的，两个文件各贴一份。
 
-新开一个会话，说「开工」。AI 会运行 brain-load 读大脑，用 goal-alignment 给你一份开工简报，你回「确认」它才动手。做完说「记一下状态」，这次的工作就进了 inbox；下次在任何一个 AI 里说「开工」，它接最近一条记录的项目，也可以说「开工 <项目名>」指定。
+## 第 4 步：建定时任务
+
+按 [prompts/schedules.md](../prompts/schedules.md) 建：每个 AI 每天 19:00 日结；所有电脑里只选一处，每天 02:00 日汇总、每周一 12:30 周总结、每月 1 日 12:30 月度归纳。那份文件里有三个 AI 各自的建法、免确认设置和完整提示词。建好后每个任务点一次「立即运行」，确认没有停在权限确认上。
 
 ## 自检
 
@@ -58,7 +60,11 @@ skills:
 env -u BRAIN_ROOT -u BRAIN_MACHINE python3 -B ~/.agents/skills/brain-load/scripts/brain_load.py --project demo
 ```
 
-故意去掉环境变量跑一遍，模拟桌面 app。输出以「# brain-load 材料」开头、第二行是你的大脑目录和机器名，就装好了。完整的验证见 [verify.md](verify.md)。
+故意去掉环境变量跑一遍，模拟桌面 app。输出以「# brain-load 材料」开头、第二行是你的大脑目录和机器名，就装好了。刚装完、汇总还没跑过时，「自动运行提醒」会有一行「日汇总：还没有运行记录」，第一次日汇总跑完就消失。完整的验证见 [verify.md](verify.md)。
+
+## 开始用
+
+新开一个会话，说「开工」。AI 会运行 brain-load 读大脑，用 goal-alignment 给你一份开工简报，你回「确认」它才动手。之后每天 19:00 日结自动把当天的工作写进 inbox，凌晨汇总进项目状态；换 AI 前想立刻接上，就说一句「记一下状态」。在任何一个 AI 里说「开工」，它接最近一条记录的项目，也可以说「开工 <项目名>」指定。
 
 ## 只装开工简报
 
@@ -70,7 +76,8 @@ env -u BRAIN_ROOT -u BRAIN_MACHINE python3 -B ~/.agents/skills/brain-load/script
 
 ## 之后
 
-- 让大脑进化：每天或每周把 `prompts/manual-merge.md` 交给 AI，它把 inbox 条目折叠进各项目的 STATUS，brain-load 下次就能读到。
+- 看汇总结果：日汇总、周总结、月度归纳的结果写在各自定时任务的会话里；有待你裁定的事，直接在那个会话里回复短指令（如「D-… 不合并」）。不看也不会漏：开工简报会列本项目的待裁定，汇总没按时跑也会提醒。
+- 想立刻汇总、或某天汇总没跑：在汇总所在的 AI 里对「brain 日汇总」点立即运行；没建定时任务的电脑，把 `prompts/manual-merge.md` 交给任意一个 AI。
 - 用 git 管理 brain 根目录，每次追加都有历史。
 - 装新技能：照常跟 AI 说「装一下 X」，它按指令块第 8 条放进大脑再同步，三个 AI 都能用。
-- 换一台电脑：大脑同步过去后，在那台电脑上按 share-skills.md 第 2 到 4 步再走一遍，技能就全带过去了；那台电脑上原来装的技能也一起搬进大脑。
+- 换一台电脑：大脑同步过去后，在那台电脑上做第 1 步的两个配置文件，再按 share-skills.md 第 2 到 4 步走一遍，技能就全带过去了，那台电脑上原来装的技能也一起搬进大脑；第 4 步只建日结，汇总已经在别处跑。
