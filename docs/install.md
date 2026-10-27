@@ -25,7 +25,7 @@ mkdir -p "$BRAIN_ROOT/skills" ~/.claude/skills
 cp -R ai-brain-starter/skills/* "$BRAIN_ROOT/skills/"
 ```
 
-然后按 share-skills.md 第 2 步，把各个 AI 原来装的技能搬进大脑：列清单，同名但内容不同的等用户选，原来的文件夹移到备份目录。搬完同步：
+然后按 share-skills.md 第 2、3 步：先盘点本机的 agent，Hermes 每个 profile 逐个看，不认识的 agent 列出来问用户；再把原来装的技能搬进大脑：列清单，同名但内容不同的等用户选，原来的文件夹移到备份目录。搬完同步：
 
 ```bash
 python3 -B "$BRAIN_ROOT/skills/brain-note/scripts/brain_materialize.py"
@@ -33,7 +33,7 @@ python3 -B "$BRAIN_ROOT/skills/brain-note/scripts/brain_materialize.py"
 
 脚本把大脑 `skills/` 里的技能放进 `~/.agents/skills/`，并给 Claude Code 建软链接。Codex 原生读 `~/.agents/skills/`，不用再做什么。
 
-用 Hermes 的，在 `~/.hermes/config.yaml` 里确认有这一段，没有就加上：
+用 Hermes 的，每个 profile 的配置（默认是 `~/.hermes/config.yaml`，其他在 `~/.hermes/profiles/<名字>/config.yaml`）里都要有这一段，没有就加上：
 
 ```yaml
 skills:
@@ -62,4 +62,4 @@ python3 -B ~/.agents/skills/brain-load/scripts/brain_load.py --project demo
 - 让大脑进化：每天或每周把 `prompts/manual-merge.md` 交给 AI，它把 inbox 条目折叠进各项目的 STATUS，brain-load 下次就能读到。
 - 用 git 管理 brain 根目录，每次追加都有历史。
 - 装新技能：照常跟 AI 说「装一下 X」，它按指令块第 8 条放进大脑再同步，三个 AI 都能用。
-- 换一台电脑：大脑同步过去后，跑一次第 2 步的同步命令，技能就全带过去了。
+- 换一台电脑：大脑同步过去后，在那台电脑上按 share-skills.md 第 2 到 4 步再走一遍，技能就全带过去了；那台电脑上原来装的技能也一起搬进大脑。
