@@ -126,3 +126,5 @@ inbox 条目原文：
 | 按 [share-skills.md](share-skills.md) 第 3 步：`~/.claude/skills` 里原来的技能复制进大脑，原文件夹移到备份后同步 | `UPDATE my-own`、`LINK claude my-own` | 0 |
 | 复制进大脑，但 `~/.claude/skills` 里的原文件夹没移走 | 只有 `UPDATE keep-old`，没有 `LINK claude`，Claude Code 仍读旧的那份 | 0 |
 | 把这个原文件夹移到备份后再同步 | `LINK claude keep-old` | 0 |
+| 同一个技能在 Claude Code 和 Codex 里各装一份、内容相同：只放一份进大脑，两份原文件夹都移到备份 | `UPDATE dup-same`、`LINK claude dup-same`；备份里两份都在 | 0 |
+| 同名但两份内容不同，选了 Codex 那份放进大脑，两份原文件夹都移到备份 | `UPDATE dup-diff`、`LINK claude dup-diff`；共用目录里是 Codex 那份，备份里两份都在 | 0 |
