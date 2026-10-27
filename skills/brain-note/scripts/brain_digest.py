@@ -77,7 +77,7 @@ def claude_sessions(since, until):
                 s["msgs"].append((ts, "U" if kind == "user" else "A", text))
         if is_daily_run(first_user):
             for sid in file_sessions:
-                sessions[sid]["skip"] = "日结任务自身"
+                sessions[sid]["skip"] = "大脑任务自身"
     return list(sessions.values())
 
 
@@ -147,7 +147,7 @@ def codex_sessions(since, until):
                     if ts is not None and since <= ts <= until and text:
                         items.append((ts, "U" if p.get("role") == "user" else "A", text))
         if not s["skip"] and is_daily_run(first_user):
-            s["skip"] = "日结任务自身"
+            s["skip"] = "大脑任务自身"
         seen, merged = set(), []
         for m in sorted(events + items, key=lambda x: x[0]):
             key = (m[1], m[2].strip(), m[0].strftime("%Y%m%d%H%M"))
@@ -255,7 +255,7 @@ def main():
     until = bc.parse_time(a.until) if a.until else datetime.datetime.now()
     raw = claude_sessions(since, until) if a.agent == "claude-code" else codex_sessions(since, until)
 
-    skipped = {"日结任务自身": 0, "子代理": 0, "时间窗内无对话": 0}
+    skipped = {"大脑任务自身": 0, "子代理": 0, "时间窗内无对话": 0}
     kept = []
     for s in raw:
         if s["skip"]:
