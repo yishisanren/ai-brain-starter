@@ -160,3 +160,24 @@ inbox 条目原文：
 | 02:00 汇总的预处理 | 摘要落盘，列出 2 个文件 2 条条目、涉及 1 个项目 |
 | 今天日汇总已跑 | 看门狗无问题 |
 | 日汇总 20 天没跑、上周没有周总结、Claude Code 4 天没日结 | 三条都列出，并写明在哪里补跑；开工材料最前面显示同样的提醒 |
+
+## 日汇总：让 AI 照提示词真跑一遍
+
+2026-10-27 在同样的沙盒大脑里（新 Mac 模拟，大脑在带空格的 iCloud 路径），Claude Code、Codex、Hermes 各写一条当天日结，内容覆盖做了、决定、假设、下一步、阻塞、更正、经验、偏好。然后开一个全新的 AI 会话，拿 [schedules.md](../prompts/schedules.md)「日汇总」提示词执行：占位符换成沙盒路径，命令前加沙盒包装，其余一字不改。约 5 分钟跑完，最终回复第一行是「日汇总 2026-10-27 · 处理 3 个文件 3 条 · 涉及项目 sales-dashboard、weekly-report · 新建项目 sales-dashboard、weekly-report · 失败项 无」。
+
+| 检查 | 结果 |
+|---|---|
+| 两个新项目的 STATUS | 都生成，首行 `---`、顶格，35 行；目标、现状、下一步、阻塞都按条目写进去，frontmatter 带 `generated` |
+| `projects/INDEX.md` | 两个项目各一行；Hermes 的「无项目工作」没有当成项目 |
+| 决定 | weekly-report 的 DECISIONS 记了「周报只发页面链接不发截图」 |
+| 假设 | sales-dashboard 的 HYPOTHESES 记了 H-2026-10-27-01，带验证方法和到期日 |
+| 更正 | `lessons/CORRECTIONS.md` 记了 B-2026-10-27-01，带根因 |
+| 经验 | `lessons/LESSONS.md` 记了 L-2026-10-27-01，`lessons/INDEX.md` 登记了它 |
+| 偏好「以后周报只要链接，别发截图」 | 范围是单个项目，且和同一条里的决定相同，按规则记进 weekly-report 的 DECISIONS，没有进 PREFERENCES |
+| `_meta/runs/2026-10-27.md` | 记了处理的文件、条目数、新建项目、编号分配、偏好分流、回读结果 |
+| `_meta/processed.json` | 登记 3 个 inbox 文件，sha256 和文件一致 |
+| inbox 原文 | 没有改动 |
+| 再跑一次预处理 | 0 条新条目，不会重复汇总 |
+| 开工读 weekly-report | 读到 STATUS，当天条目标为「STATUS 生成前已有」；不再提醒日汇总没跑 |
+
+这次运行查出模板两处和规则不一致，已修：大脑模板的 `lessons/CORRECTIONS.md` 改成规则用的 8 列表头（id、日期、项目、场景、偏差、根因、修正、来源）；`templates.md` 的 HYPOTHESES 加上「来源」列。
