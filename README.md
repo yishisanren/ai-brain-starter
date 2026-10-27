@@ -6,6 +6,20 @@
 - **分身**：`brain-load` + `goal-alignment`，新会话开工先读大脑，再给你一份开工简报，你回「确认」它才动手。
 - **进化**：`brain-note` 把每次工作写回 inbox，`prompts/manual-merge.md` 把条目折叠进项目 STATUS，大脑越用越准。
 
+## 一段话装好
+
+把下面这段话发给你的 Claude Code 或 Codex，它会自己装好：
+
+> 帮我安装 github.com/yishisanren/ai-brain-starter：按仓库里 docs/install.md 把技能、大脑和指令块都装好，大脑放在 ~/brain。装完跑一次自检，再告诉我怎么开工。
+
+只想要开工简报：
+
+> 帮我从 github.com/yishisanren/ai-brain-starter 只装 skills/goal-alignment 这一个技能，装好后告诉我怎么用。
+
+几台电脑共用一份大脑，把「~/brain」换成 iCloud 之类会同步的文件夹。
+
+## 手动安装
+
 三步安装（细节见 [docs/install.md](docs/install.md)）：
 
 1. 复制 `skills/` 下四个目录到 `~/.claude/skills/`（Codex 是 `~/.codex/skills/`）。
