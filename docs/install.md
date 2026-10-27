@@ -5,7 +5,7 @@
 ## 第 1 步：复制技能
 
 ```bash
-git clone https://github.com/<你的用户名>/ai-brain-starter.git
+git clone https://github.com/yishisanren/ai-brain-starter.git
 ```
 
 Claude Code：
