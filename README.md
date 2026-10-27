@@ -10,7 +10,7 @@
 
 把下面这段话发给你的 Claude Code 或 Codex，它会自己装好：
 
-> 帮我安装 github.com/yishisanren/ai-brain-starter：按仓库里 docs/install.md 把技能、大脑和指令块都装好，大脑放在 ~/brain。装完跑一次自检，再告诉我怎么开工。
+> 帮我安装 github.com/yishisanren/ai-brain-starter：按 docs/install.md 装好技能、大脑和指令块，大脑放在 ~/brain，装完自检后告诉我怎么开工。
 
 只想要开工简报：
 
@@ -18,19 +18,19 @@
 
 几台电脑共用一份大脑，把「~/brain」换成 iCloud 之类会同步的文件夹。
 
-以后给几个 AI 装新插件，对任何一个说：
+接通三个 AI 共用插件（装全套的已经包含这一步）：
 
-> 把 <技能地址或名字> 装成几个 AI 共用。
+> 帮我按 github.com/yishisanren/ai-brain-starter 的 docs/share-skills.md，把各个 AI 接通成共用技能：已装的搬进大脑，以后装的默认共用。
 
-技能放在大脑的 `skills/` 里，装一次，Claude Code、Codex、Hermes 都能用，规矩见 `brain-template/skills/README.md`。
+接通之后，技能都放在大脑的 `skills/` 里，Claude Code、Codex、Hermes 都能用。以后装新技能照常跟 AI 说，默认三个 AI 共用，规矩见 `brain-template/skills/README.md`。
 
 ## 手动安装
 
 三步安装（细节见 [docs/install.md](docs/install.md)）：
 
 1. 复制 `brain-template/` 到你放记忆库的地方，`export BRAIN_ROOT=<那个目录>`、`export BRAIN_MACHINE=<本机名>`。
-2. 把 `skills/` 下四个目录放进大脑的 `skills/`，运行 `brain_materialize.py` 同步给所有 AI。
+2. 把 `skills/` 下四个目录放进大脑的 `skills/`，各个 AI 原来装的技能也搬进去（见 [docs/share-skills.md](docs/share-skills.md)），运行 `brain_materialize.py` 同步给所有 AI。
 3. 把 `prompts/instruction-block.md` 贴进 `~/.claude/CLAUDE.md` 或 `~/.codex/AGENTS.md`，改占位符，新开会话说「开工」。
 
-仓库内容：`skills/` 四个技能，`brain-template/` 空记忆库，`prompts/` 指令块、开工简报模板、条目格式、人工汇总提示词，`docs/` 安装与验证记录。
+仓库内容：`skills/` 四个技能，`brain-template/` 空记忆库，`prompts/` 指令块、开工简报模板、条目格式、人工汇总提示词，`docs/` 安装、接通共用技能与验证记录。
 只依赖 Python 3.9+ 标准库。MIT 协议。

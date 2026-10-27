@@ -16,11 +16,18 @@ source ~/.zshrc
 
 桌面版 app 有时读不到 shell 变量，可以改用文件：把根目录路径写进 `~/.config/brain/root`，机器名写进 `~/.config/brain/machine`。或者在 `MAP.md`「机器」表填一行，「识别」列填 `hostname` 输出里独有的一段。Windows 在系统环境变量里设 `BRAIN_ROOT` 和 `BRAIN_MACHINE`，命令里的 `python3` 换成 `python`。
 
-## 第 2 步：技能放进大脑，同步给所有 AI
+## 第 2 步：接通共用技能
+
+技能放进大脑，同步给所有 AI，各个 AI 里原来装的技能也搬进来。细节见 [share-skills.md](share-skills.md)。
 
 ```bash
 mkdir -p "$BRAIN_ROOT/skills" ~/.claude/skills
 cp -R ai-brain-starter/skills/* "$BRAIN_ROOT/skills/"
+```
+
+然后按 share-skills.md 第 2 步，把各个 AI 原来装的技能搬进大脑：列清单，同名但内容不同的等用户选，原来的文件夹移到备份目录。搬完同步：
+
+```bash
 python3 -B "$BRAIN_ROOT/skills/brain-note/scripts/brain_materialize.py"
 ```
 
@@ -34,7 +41,7 @@ skills:
     - ~/.agents/skills
 ```
 
-本机已有同名技能时脚本报 `SKIP`、不覆盖，把它们列出来交给用户决定。以后装新插件的做法见大脑里的 `skills/README.md`。
+脚本报 `SKIP`，或者某个技能没有 `LINK claude`，说明对应目录里还有旧文件夹没移走，回到上面「搬进大脑」那一段处理。第 3 步贴的指令块里有一条「装技能默认共用」，接通之后，以后装任何技能都默认三个 AI 共用。
 
 ## 第 3 步：贴指令块
 
@@ -54,5 +61,5 @@ python3 -B ~/.agents/skills/brain-load/scripts/brain_load.py --project demo
 
 - 让大脑进化：每天或每周把 `prompts/manual-merge.md` 交给 AI，它把 inbox 条目折叠进各项目的 STATUS，brain-load 下次就能读到。
 - 用 git 管理 brain 根目录，每次追加都有历史。
-- 装新插件：对任何一个 AI 说「把 <技能地址> 装成几个 AI 共用」，它按大脑里 `skills/README.md` 的规矩装。
+- 装新技能：照常跟 AI 说「装一下 X」，它按指令块第 8 条放进大脑再同步，三个 AI 都能用。
 - 换一台电脑：大脑同步过去后，跑一次第 2 步的同步命令，技能就全带过去了。
