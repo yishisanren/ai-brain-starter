@@ -1,0 +1,47 @@
+/* theme: momcozy-light — Momcozy 3.0 tokens (App 3.0 Design, light). Layers: primitive → momcozy semantic → deck semantic. */
+:root{
+  /* 1 primitive */
+  --colors-grays-1000:#000000;--colors-grays-900:#240F1B;--colors-grays-600:#9F969B;--colors-grays-500:#BDB7BA;
+  --colors-grays-300:#D3CFD1;--colors-grays-200:#E4E2E3;--colors-grays-150:#E9E8E7;--colors-grays-100:#F0EEEF;
+  --colors-grays-50:#F9F7F5;--colors-grays-0:#FFFFFF;
+  --colors-brands-mom-100:#FFDDE1;--colors-brands-mom-300:#FFC0CB;--colors-brands-mom-500:#EE9CA7;--colors-brands-mom-700:#770523;
+  --colors-brands-care-100:#F4F2FF;--colors-brands-care-300:#C8BDFF;--colors-brands-care-500:#8568C2;--colors-brands-care-700:#552C95;
+  --colors-brands-parenting-100:#FFF7BD;--colors-brands-parenting-300:#F0CB58;--colors-brands-parenting-500:#DDA448;
+  --colors-brands-family-100:#F0F9F0;--colors-brands-family-300:#B7E5BA;--colors-brands-family-500:#288760;--colors-brands-family-700:#1A5140;
+  --status-success:#009E3D;--status-warning:#F38245;--status-danger:#D20307;
+  /* brand fonts (Exposure / Aeonik) not available on this machine: PingFang SC for every role */
+  --font-brand:"PingFang SC","Noto Sans SC",ui-sans-serif,system-ui,sans-serif;
+  --font-plain:"PingFang SC","Noto Sans SC",ui-sans-serif,system-ui,sans-serif;
+
+  /* 2 momcozy semantic */
+  --colors-backgrouds-primary:var(--colors-grays-50);--colors-backgrouds-secondary:var(--colors-grays-0);
+  --colors-border-primary:var(--colors-grays-200);--colors-border-secondary:var(--colors-grays-100);
+  --colors-text-color-text-primary:var(--colors-grays-900);--colors-text-color-text-secondary:var(--colors-grays-600);
+  --colors-text-color-text-tertiary:var(--colors-grays-500);
+  --colors-semantic-fills-mom-primary:var(--colors-brands-mom-700);--colors-semantic-fills-care-default:var(--colors-brands-care-700);
+  --colors-semantic-fills-family-default:var(--colors-brands-family-700);--colors-semantic-labels-primary:var(--colors-grays-0);
+
+  /* 3 deck semantic (html-ppt tokens) */
+  --bg:var(--colors-backgrouds-primary);--bg-soft:var(--colors-grays-100);
+  --surface:var(--colors-backgrouds-secondary);--surface-2:var(--colors-grays-100);
+  --border:var(--colors-border-primary);--border-strong:var(--colors-grays-300);
+  --text-1:var(--colors-text-color-text-primary);
+  --text-2:rgba(36,15,27,.8);   /* Grays 900 × opacity-80: body copy on slides; Text/Secondary is too light for projection */
+  --text-3:var(--colors-text-color-text-secondary);
+  --accent:var(--colors-semantic-fills-mom-primary);--accent-ink:var(--colors-semantic-labels-primary);
+  --accent-2:var(--colors-semantic-fills-care-default);--accent-3:var(--colors-semantic-fills-family-default);
+  --c-brain:var(--colors-semantic-fills-care-default);--c-clone:var(--colors-semantic-fills-mom-primary);
+  --c-evolve:var(--colors-semantic-fills-family-default);--part-ink:var(--colors-semantic-labels-primary);
+  --good:var(--status-success);--warn:var(--status-warning);--bad:var(--status-danger);
+  /* fx palette only (knowledge graph node colors) */
+  --ok:var(--colors-brands-family-500);--danger:var(--colors-brands-mom-500);--kg-edge:rgba(36,15,27,.14);
+  --code-bg:var(--colors-grays-900);--code-fg:#F7F3F6;--code-dim:var(--colors-grays-600);
+  --code-key:var(--colors-brands-family-300);--code-val:var(--colors-brands-care-300);--code-hl:rgba(255,192,203,.16);
+  --glow-1:var(--colors-brands-mom-100);--glow-2:var(--colors-brands-care-300);--glow-3:var(--colors-brands-family-300);--glow-a:.55;
+  --deck-bg:var(--colors-backgrouds-primary);
+  --radius-sm:16px;--radius:24px;--radius-lg:24px;   /* Radius 2xl / 3xl */
+  --shadow:0 2px 4px rgba(36,15,27,.03),0 8px 24px rgba(36,15,27,.05);
+  --shadow-lg:0 4px 8px rgba(36,15,27,.04),0 16px 40px rgba(36,15,27,.08);
+  --font-sans:var(--font-plain);--font-display:var(--font-brand);--font-serif:var(--font-brand);
+  color-scheme:light;
+}

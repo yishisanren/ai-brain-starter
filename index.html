@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-themes="momcozy-light,momcozy-dark" data-theme-base="assets/themes/">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>分身有术：让每个 AI 都带着我的大脑工作</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" id="theme-link" href="assets/themes/momcozy-light.css">
+<link rel="stylesheet" href="assets/animations/animations.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="tpl-fs">
+<div class="deck">
+  <div class="ambient"><i></i><i></i><i></i><b></b></div>
+  <span class="slide-number fs-num"></span>
+  <span class="fs-brand">分身有术</span>
+
+<!-- ================= 开场 ================= -->
+
+  <!-- P01 封面 -->
+  <section class="slide mid cover" data-title="封面">
+    <div class="fx-kg" data-fx="knowledge-graph"></div>
+    <p class="kicker">三个 AI，一份大脑</p>
+    <h1 class="h1" data-anim="fade-up">分身有术</h1>
+    <p class="sub" data-anim="fade-up">让每个 AI 都带着我的大脑工作</p>
+    <div class="icons" data-anim="stagger-list"><span>🧠</span><span>🪞</span><span>🧬</span></div>
+    <p class="by">张卫卫 · 内部分享</p>
+    <aside class="notes">
+      <p>大家好。今天这个分享叫<strong>分身有术</strong>。</p>
+      <p>我现在同时在用三个 AI 干活：Claude Code、Codex，还有 Hermes。三个 AI 就是三个分身。麻烦在于，分身多了，<strong>每一个都得我从头带一遍</strong>：项目背景讲一遍，口径讲一遍，上次做到哪讲一遍。</p>
+      <p>这段时间我搭了一套办法：让它们读<strong>同一份大脑</strong>，开工先复述再动手，干完把结果写回去。</p>
+      <p>今天就讲这套办法怎么搭、怎么用、踩了哪些坑。结尾大家可以当场装上。</p>
+      <p>先不讲道理，先请大家猜一个。</p>
+    </aside>
+  </section>
+
+  <!-- P02 俄罗斯方块：问题 -->
+  <section class="slide mid" data-title="俄罗斯方块：问题">
+    <div class="split" style="grid-template-columns:1fr 400px;gap:120px;align-items:center">
+      <div>
+        <p class="kicker">先猜一个</p>
+        <p class="quote plain" data-anim="fade-up">让 AI 玩俄罗斯方块：<br>分数越高越好，别输。</p>
+        <p class="take" style="margin-top:72px">猜猜，它最后学会了什么？</p>
+      </div>
+      <div class="board" data-anim="fade-up"><svg class="tetris" viewBox="0 0 400 800" role="img" aria-label="俄罗斯方块：方块堆得很乱，快堆到顶了"><rect class="e" x="2" y="2" width="36" height="36" rx="6"/><rect class="e" x="42" y="2" width="36" height="36" rx="6"/><rect class="e" x="82" y="2" width="36" height="36" rx="6"/><rect class="e" x="122" y="2" width="36" height="36" rx="6"/><rect class="e" x="162" y="2" width="36" height="36" rx="6"/><rect class="e" x="202" y="2" width="36" height="36" rx="6"/><rect class="e" x="242" y="2" width="36" height="36" rx="6"/><rect class="e" x="282" y="2" width="36" height="36" rx="6"/><rect class="e" x="322" y="2" width="36" height="36" rx="6"/><rect class="e" x="362" y="2" width="36" height="36" rx="6"/><rect class="e" x="2" y="42" width="36" height="36" rx="6"/><rect class="e" x="42" y="42" width="36" height="36" rx="6"/><rect class="e" x="82" y="42" width="36" height="36" rx="6"/><rect class="e" x="122" y="42" width="36" height="36" rx="6"/><rect class="e" x="162" y="42" width="36" height="36" rx="6"/><rect class="falling" x="202" y="42" width="36" height="36" rx="6"/><rect class="falling" x="242" y="42" width="36" height="36" rx="6"/><rect class="falling" x="282" y="42" width="36" height="36" rx="6"/><rect class="e" x="322" y="42" width="36" height="36" rx="6"/><rect class="e" x="362" y="42" width="36" height="36" rx="6"/><rect class="e" x="2" y="82" width="36" height="36" rx="6"/><rect class="e" x="42" y="82" width="36" height="36" rx="6"/><rect class="e" x="82" y="82" width="36" height="36" rx="6"/><rect class="e" x="122" y="82" width="36" height="36" rx="6"/><rect class="e" x="162" y="82" width="36" height="36" rx="6"/><rect class="e" x="202" y="82" width="36" height="36" rx="6"/><rect class="falling" x="242" y="82" width="36" height="36" rx="6"/><rect class="e" x="282" y="82" width="36" height="36" rx="6"/><rect class="e" x="322" y="82" width="36" height="36" rx="6"/><rect class="e" x="362" y="82" width="36" height="36" rx="6"/><rect class="e" x="2" y="122" width="36" height="36" rx="6"/><rect class="e" x="42" y="122" width="36" height="36" rx="6"/><rect class="e" x="82" y="122" width="36" height="36" rx="6"/><rect class="e" x="122" y="122" width="36" height="36" rx="6"/><rect class="e" x="162" y="122" width="36" height="36" rx="6"/><rect class="e" x="202" y="122" width="36" height="36" rx="6"/><rect class="e" x="242" y="122" width="36" height="36" rx="6"/><rect class="e" x="282" y="122" width="36" height="36" rx="6"/><rect class="e" x="322" y="122" width="36" height="36" rx="6"/><rect class="e" x="362" y="122" width="36" height="36" rx="6"/><rect class="e" x="2" y="162" width="36" height="36" rx="6"/><rect class="e" x="42" y="162" width="36" height="36" rx="6"/><rect class="e" x="82" y="162" width="36" height="36" rx="6"/><rect class="e" x="122" y="162" width="36" height="36" rx="6"/><rect class="e" x="162" y="162" width="36" height="36" rx="6"/><rect class="e" x="202" y="162" width="36" height="36" rx="6"/><rect class="amber" x="242" y="162" width="36" height="36" rx="6"/><rect class="e" x="282" y="162" width="36" height="36" rx="6"/><rect class="e" x="322" y="162" width="36" height="36" rx="6"/><rect class="e" x="362" y="162" width="36" height="36" rx="6"/><rect class="e" x="2" y="202" width="36" height="36" rx="6"/><rect class="e" x="42" y="202" width="36" height="36" rx="6"/><rect class="e" x="82" y="202" width="36" height="36" rx="6"/><rect class="e" x="122" y="202" width="36" height="36" rx="6"/><rect class="e" x="162" y="202" width="36" height="36" rx="6"/><rect class="clone" x="202" y="202" width="36" height="36" rx="6"/><rect class="amber" x="242" y="202" width="36" height="36" rx="6"/><rect class="e" x="282" y="202" width="36" height="36" rx="6"/><rect class="e" x="322" y="202" width="36" height="36" rx="6"/><rect class="e" x="362" y="202" width="36" height="36" rx="6"/><rect class="e" x="2" y="242" width="36" height="36" rx="6"/><rect class="e" x="42" y="242" width="36" height="36" rx="6"/><rect class="e" x="82" y="242" width="36" height="36" rx="6"/><rect class="brain" x="122" y="242" width="36" height="36" rx="6"/><rect class="e" x="162" y="242" width="36" height="36" rx="6"/><rect class="evolve" x="202" y="242" width="36" height="36" rx="6"/><rect class="amber" x="242" y="242" width="36" height="36" rx="6"/><rect class="e" x="282" y="242" width="36" height="36" rx="6"/><rect class="e" x="322" y="242" width="36" height="36" rx="6"/><rect class="e" x="362" y="242" width="36" height="36" rx="6"/><rect class="e" x="2" y="282" width="36" height="36" rx="6"/><rect class="gray" x="42" y="282" width="36" height="36" rx="6"/><rect class="e" x="82" y="282" width="36" height="36" rx="6"/><rect class="brain" x="122" y="282" width="36" height="36" rx="6"/><rect class="e" x="162" y="282" width="36" height="36" rx="6"/><rect class="evolve" x="202" y="282" width="36" height="36" rx="6"/><rect class="amber" x="242" y="282" width="36" height="36" rx="6"/><rect class="e" x="282" y="282" width="36" height="36" rx="6"/><rect class="e" x="322" y="282" width="36" height="36" rx="6"/><rect class="evolve" x="362" y="282" width="36" height="36" rx="6"/><rect class="e" x="2" y="322" width="36" height="36" rx="6"/><rect class="amber" x="42" y="322" width="36" height="36" rx="6"/><rect class="e" x="82" y="322" width="36" height="36" rx="6"/><rect class="e" x="122" y="322" width="36" height="36" rx="6"/><rect class="amber" x="162" y="322" width="36" height="36" rx="6"/><rect class="amber" x="202" y="322" width="36" height="36" rx="6"/><rect class="e" x="242" y="322" width="36" height="36" rx="6"/><rect class="evolve" x="282" y="322" width="36" height="36" rx="6"/><rect class="e" x="322" y="322" width="36" height="36" rx="6"/><rect class="gray" x="362" y="322" width="36" height="36" rx="6"/><rect class="amber" x="2" y="362" width="36" height="36" rx="6"/><rect class="amber" x="42" y="362" width="36" height="36" rx="6"/><rect class="e" x="82" y="362" width="36" height="36" rx="6"/><rect class="brain" x="122" y="362" width="36" height="36" rx="6"/><rect class="amber" x="162" y="362" width="36" height="36" rx="6"/><rect class="amber" x="202" y="362" width="36" height="36" rx="6"/><rect class="evolve" x="242" y="362" width="36" height="36" rx="6"/><rect class="evolve" x="282" y="362" width="36" height="36" rx="6"/><rect class="e" x="322" y="362" width="36" height="36" rx="6"/><rect class="gray" x="362" y="362" width="36" height="36" rx="6"/><rect class="e" x="2" y="402" width="36" height="36" rx="6"/><rect class="brain" x="42" y="402" width="36" height="36" rx="6"/><rect class="e" x="82" y="402" width="36" height="36" rx="6"/><rect class="amber" x="122" y="402" width="36" height="36" rx="6"/><rect class="evolve" x="162" y="402" width="36" height="36" rx="6"/><rect class="evolve" x="202" y="402" width="36" height="36" rx="6"/><rect class="evolve" x="242" y="402" width="36" height="36" rx="6"/><rect class="evolve" x="282" y="402" width="36" height="36" rx="6"/><rect class="gray" x="322" y="402" width="36" height="36" rx="6"/><rect class="gray" x="362" y="402" width="36" height="36" rx="6"/><rect class="brain" x="2" y="442" width="36" height="36" rx="6"/><rect class="brain" x="42" y="442" width="36" height="36" rx="6"/><rect class="amber" x="82" y="442" width="36" height="36" rx="6"/><rect class="amber" x="122" y="442" width="36" height="36" rx="6"/><rect class="e" x="162" y="442" width="36" height="36" rx="6"/><rect class="evolve" x="202" y="442" width="36" height="36" rx="6"/><rect class="evolve" x="242" y="442" width="36" height="36" rx="6"/><rect class="evolve" x="282" y="442" width="36" height="36" rx="6"/><rect class="gray" x="322" y="442" width="36" height="36" rx="6"/><rect class="gray" x="362" y="442" width="36" height="36" rx="6"/><rect class="amber" x="2" y="482" width="36" height="36" rx="6"/><rect class="amber" x="42" y="482" width="36" height="36" rx="6"/><rect class="amber" x="82" y="482" width="36" height="36" rx="6"/><rect class="amber" x="122" y="482" width="36" height="36" rx="6"/><rect class="brain" x="162" y="482" width="36" height="36" rx="6"/><rect class="brain" x="202" y="482" width="36" height="36" rx="6"/><rect class="e" x="242" y="482" width="36" height="36" rx="6"/><rect class="clone" x="282" y="482" width="36" height="36" rx="6"/><rect class="clone" x="322" y="482" width="36" height="36" rx="6"/><rect class="clone" x="362" y="482" width="36" height="36" rx="6"/><rect class="amber" x="2" y="522" width="36" height="36" rx="6"/><rect class="amber" x="42" y="522" width="36" height="36" rx="6"/><rect class="e" x="82" y="522" width="36" height="36" rx="6"/><rect class="amber" x="122" y="522" width="36" height="36" rx="6"/><rect class="brain" x="162" y="522" width="36" height="36" rx="6"/><rect class="brain" x="202" y="522" width="36" height="36" rx="6"/><rect class="clone" x="242" y="522" width="36" height="36" rx="6"/><rect class="clone" x="282" y="522" width="36" height="36" rx="6"/><rect class="e" x="322" y="522" width="36" height="36" rx="6"/><rect class="clone" x="362" y="522" width="36" height="36" rx="6"/><rect class="evolve" x="2" y="562" width="36" height="36" rx="6"/><rect class="evolve" x="42" y="562" width="36" height="36" rx="6"/><rect class="e" x="82" y="562" width="36" height="36" rx="6"/><rect class="gray" x="122" y="562" width="36" height="36" rx="6"/><rect class="clone" x="162" y="562" width="36" height="36" rx="6"/><rect class="clone" x="202" y="562" width="36" height="36" rx="6"/><rect class="brain" x="242" y="562" width="36" height="36" rx="6"/><rect class="brain" x="282" y="562" width="36" height="36" rx="6"/><rect class="brain" x="322" y="562" width="36" height="36" rx="6"/><rect class="brain" x="362" y="562" width="36" height="36" rx="6"/><rect class="evolve" x="2" y="602" width="36" height="36" rx="6"/><rect class="evolve" x="42" y="602" width="36" height="36" rx="6"/><rect class="e" x="82" y="602" width="36" height="36" rx="6"/><rect class="e" x="122" y="602" width="36" height="36" rx="6"/><rect class="clone" x="162" y="602" width="36" height="36" rx="6"/><rect class="clone" x="202" y="602" width="36" height="36" rx="6"/><rect class="brain" x="242" y="602" width="36" height="36" rx="6"/><rect class="brain" x="282" y="602" width="36" height="36" rx="6"/><rect class="brain" x="322" y="602" width="36" height="36" rx="6"/><rect class="brain" x="362" y="602" width="36" height="36" rx="6"/><rect class="e" x="2" y="642" width="36" height="36" rx="6"/><rect class="amber" x="42" y="642" width="36" height="36" rx="6"/><rect class="gray" x="82" y="642" width="36" height="36" rx="6"/><rect class="gray" x="122" y="642" width="36" height="36" rx="6"/><rect class="amber" x="162" y="642" width="36" height="36" rx="6"/><rect class="e" x="202" y="642" width="36" height="36" rx="6"/><rect class="gray" x="242" y="642" width="36" height="36" rx="6"/><rect class="gray" x="282" y="642" width="36" height="36" rx="6"/><rect class="clone" x="322" y="642" width="36" height="36" rx="6"/><rect class="clone" x="362" y="642" width="36" height="36" rx="6"/><rect class="amber" x="2" y="682" width="36" height="36" rx="6"/><rect class="amber" x="42" y="682" width="36" height="36" rx="6"/><rect class="gray" x="82" y="682" width="36" height="36" rx="6"/><rect class="gray" x="122" y="682" width="36" height="36" rx="6"/><rect class="amber" x="162" y="682" width="36" height="36" rx="6"/><rect class="amber" x="202" y="682" width="36" height="36" rx="6"/><rect class="gray" x="242" y="682" width="36" height="36" rx="6"/><rect class="gray" x="282" y="682" width="36" height="36" rx="6"/><rect class="clone" x="322" y="682" width="36" height="36" rx="6"/><rect class="e" x="362" y="682" width="36" height="36" rx="6"/><rect class="gray" x="2" y="722" width="36" height="36" rx="6"/><rect class="gray" x="42" y="722" width="36" height="36" rx="6"/><rect class="evolve" x="82" y="722" width="36" height="36" rx="6"/><rect class="evolve" x="122" y="722" width="36" height="36" rx="6"/><rect class="gray" x="162" y="722" width="36" height="36" rx="6"/><rect class="e" x="202" y="722" width="36" height="36" rx="6"/><rect class="evolve" x="242" y="722" width="36" height="36" rx="6"/><rect class="evolve" x="282" y="722" width="36" height="36" rx="6"/><rect class="gray" x="322" y="722" width="36" height="36" rx="6"/><rect class="gray" x="362" y="722" width="36" height="36" rx="6"/><rect class="e" x="2" y="762" width="36" height="36" rx="6"/><rect class="gray" x="42" y="762" width="36" height="36" rx="6"/><rect class="evolve" x="82" y="762" width="36" height="36" rx="6"/><rect class="evolve" x="122" y="762" width="36" height="36" rx="6"/><rect class="gray" x="162" y="762" width="36" height="36" rx="6"/><rect class="gray" x="202" y="762" width="36" height="36" rx="6"/><rect class="e" x="242" y="762" width="36" height="36" rx="6"/><rect class="evolve" x="282" y="762" width="36" height="36" rx="6"/><rect class="e" x="322" y="762" width="36" height="36" rx="6"/><rect class="gray" x="362" y="762" width="36" height="36" rx="6"/></svg></div>
+    </div>
+    <aside class="notes">
+      <p>大家看右边这张图。</p>
+      <p>有人让一个<strong>会自己学打游戏的 AI</strong> 去玩俄罗斯方块。它先看人玩一小段，记下画面背后哪些数字在往上涨，比如分数、关卡，然后它的目标就是让这些数字一直涨。</p>
+      <p>目标就一个：<strong>分数越高越好，别输</strong>。</p>
+      <p>大家猜猜，它最后学会了什么？</p>
+      <p>（停两秒，让下面猜。）</p>
+    </aside>
+  </section>
+
+  <!-- P03 俄罗斯方块：揭晓 -->
+  <section class="slide mid" data-title="俄罗斯方块：揭晓">
+    <p class="kicker">一个经典的 AI 故事 · 2013</p>
+    <div class="row" style="gap:56px;align-items:center" data-anim="fade-up">
+      <div class="pause-icon" aria-hidden="true"><i></i><i></i></div>
+      <p class="quote plain">在快输的前一刻按下暂停，<br>再也没按继续。</p>
+    </div>
+    <p class="take" style="margin-top:72px">目标没说清楚的地方，AI 会自己补，<b>往最省事的方向补</b>。</p>
+    <aside class="notes">
+      <p>它方块堆得一塌糊涂，比随手乱放还差，<strong>一行都没消过</strong>。</p>
+      <p>但就在下一块落下来、游戏就要结束的前一刻，它<strong>按下了暂停，然后再也没按继续</strong>。游戏不结束，它就永远不算输。</p>
+      <p>这是 <strong>2013 年一个真实的实验</strong>，作者在论文里写了一句：真正的赢法，就是不玩。</p>
+      <p>这个 AI 没有违规，它完全照着目标做了。问题出在目标里少了一句：<strong>游戏得一直玩下去</strong>。</p>
+      <p>我们每天给 AI 下的指令也一样。「把周报做得更有价值」「帮我完善一下」，没写清楚的地方，它会自己补，而且<strong>往最省事的方向补</strong>。</p>
+      <p>这是目标没说清楚。还有一种更常见的麻烦：<strong>说过的话，换个 AI 就忘了</strong>。看一个对比。</p>
+      <p>（出处：Tom Murphy VII，2013 年 SIGBOVIK 论文，程序叫 playfun。有人问再说。）</p>
+    </aside>
+  </section>
+
+  <!-- P04 换 AI 接着干 -->
+  <section class="slide dense" data-title="换 AI 接着干">
+    <p class="kicker">大家都遇到过</p>
+    <h2 class="h2">额度用完换个 AI：<em>重讲一遍，还是一句「开工」</em></h2>
+    <div class="grid g2" data-anim="fade-up">
+      <div class="card" style="--part:var(--bad)">
+        <h4>没有大脑</h4>
+        <div class="chat">
+          <span class="who">Claude Code</span>
+          <span class="sys bad">额度已用完，几小时后恢复</span>
+          <span class="swap">换到 Codex</span>
+          <div class="me" style="background:var(--text-3)">接着刚才的周报做</div>
+          <div class="ai bad">好的。请问是哪份周报？做到哪一步了？数据从哪里取？</div>
+          <div class="me" style="background:var(--text-3)">……（把背景从头讲一遍）</div>
+        </div>
+      </div>
+      <div class="card" style="--part:var(--evolve)">
+        <h4>有大脑</h4>
+        <div class="chat" style="--part:var(--evolve)">
+          <span class="who">Claude Code</span>
+          <span class="sys">额度快用完了</span>
+          <div class="me">记一下状态</div>
+          <div class="ai">已写入：IoT 周报 · 配网章节已核对 · 下一步：修周环比公式</div>
+          <span class="swap">额度用完，换到 Codex</span>
+          <div class="me">开工</div>
+          <div class="ai"><pre>开工简报 · IoT 周报
+现状：配网章节已核对
+下一步：修周环比公式
+回「确认」我就开始</pre></div>
+        </div>
+      </div>
+    </div>
+    <aside class="notes">
+      <p>这个场景，大家应该都遇到过。</p>
+      <p>左边，<strong>没有大脑</strong>。我用 Claude Code 做周报，做到一半，<strong>额度用完了</strong>，要等几个小时才恢复。我切到 Codex，说「接着刚才的周报做」。它第一句就是反问：哪份周报？做到哪一步了？数据从哪取？我只好把背景从头讲一遍，讲完它还可能猜错口径。</p>
+      <p>右边，<strong>有大脑</strong>。看到额度快用完的提示，我说一句<strong>「记一下状态」</strong>，它把做到哪、下一步写进大脑。额度一用完，切到 Codex，说<strong>「开工」</strong>。它先把现状和下一步读出来，给我一份简报，等我回「确认」才动手。</p>
+      <p>就算来不及说「记一下状态」，每天晚上七点的日结，也已经把当天的进度写进去了。</p>
+      <p>一个是目标没说清，一个是说过的话记不住。今天讲的三件事，就是治这两个毛病：<strong>不给 AI 留暂停键，也不让它忘了你说过的话</strong>。</p>
+    </aside>
+  </section>
+
+  <!-- P05 今天讲三件事 -->
+  <section class="slide mid" data-title="今天讲三件事">
+    <p class="kicker">今天讲三件事</p>
+    <h2 class="h2">大脑、分身、进化</h2>
+    <div class="toc" data-anim="stagger-list">
+      <div class="t-brain"><div class="ic">🧠</div><div class="no">01</div><h3>大脑</h3><p>先写下来。我的项目状态、决定、原话和踩过的坑，写成一份所有 AI 都能读的文件夹。</p></div>
+      <div class="t-clone"><div class="ic">🪞</div><div class="no">02</div><h3>分身</h3><p>先复述，再动手。AI 开工先读大脑，把这次的事复述成五行简报，我确认一次它才开始。</p></div>
+      <div class="t-evolve"><div class="ic">🧬</div><div class="no">03</div><h3>进化</h3><p>每天长一点。AI 每天把工作写回大脑，错的标失效，对的留下，矛盾由我裁定。</p></div>
+    </div>
+    <aside class="notes">
+      <p>今天讲三件事。</p>
+      <p>第一件，<strong>大脑</strong>。我把什么写下来，让每个 AI 都能读。</p>
+      <p>第二件，<strong>分身</strong>。AI 开工先读大脑，再把这次要做的事复述成一页简报，我确认一次它才动手。</p>
+      <p>第三件，<strong>进化</strong>。每个 AI 每天把工作写回大脑；错的结论标失效，对的留下来；矛盾我来裁。大脑就这样一天天长。</p>
+      <p>顺序是故意的：<strong>先讲大脑长什么样</strong>，因为后面两件事都靠它。分身开工读的是它，进化改的也是它。</p>
+    </aside>
+  </section>
+
+<!-- ================= 第一部分 大脑 ================= -->
+
+  <!-- P05 章节页 -->
+  <section class="slide mid p-brain" data-title="第一部分 大脑">
+    <div class="fx-bg" data-fx="constellation"></div>
+    <p class="kicker">第一部分</p>
+    <h2 class="sec-title" data-anim="fade-up"><span class="emo">🧠</span> 大脑：先写下来</h2>
+    <p class="lede">我的项目状态、决定、原话和踩过的坑，写成一份所有 AI 都能读的文件夹。</p>
+    <div class="toc focus mt-l">
+      <div class="t-brain on"><div class="no">01</div><h3>大脑</h3></div>
+      <div class="t-clone"><div class="no">02</div><h3>分身</h3></div>
+      <div class="t-evolve"><div class="no">03</div><h3>进化</h3></div>
+    </div>
+    <aside class="notes">
+      <p>第一部分，<strong>大脑</strong>。</p>
+      <p>这一段讲清楚三个问题：为什么要写下来；写什么、不写什么；写在哪、长什么样。</p>
+      <p>最后会讲一下大脑的边界，因为每次我跟人讲这个，第一个问题都是：「你这不就是把自己的脑子上传了吗？」到时候回答。</p>
+    </aside>
+  </section>
+
+  <!-- P06 为什么要写下来 -->
+  <section class="slide p-brain" data-title="为什么要写下来">
+    <p class="kicker">为什么要一份写下来的大脑</p>
+    <h2 class="h2">三个 AI 各记各的，<em>换一个就得重讲</em></h2>
+    <div class="grid g3" data-anim="stagger-list">
+      <div class="card"><span class="ic">💻</span><h4>Claude Code</h4><p>我在这个项目做到哪，只记在它自己那里。</p></div>
+      <div class="card"><span class="ic">⌨️</span><h4>Codex</h4><p>同一个项目，它知道的是另一半。</p></div>
+      <div class="card"><span class="ic">💬</span><h4>Hermes</h4><p>聊天里定下的事，另外两个都不知道。</p></div>
+    </div>
+    <p class="take mt-l">目标：<b>任何一个 AI 开工，都读到同一份项目状态</b>。换 AI 前说一句「记一下状态」，换过去说「开工」，就能接上。</p>
+    <aside class="notes">
+      <p>先问大家一句：你们换工具的时候，是不是也在<strong>反复粘贴同一段背景</strong>？</p>
+      <p>我的情况是这样：一台 Mac 上三个 AI。Claude Code 擅长一类活，Codex 擅长一类活，Hermes 挂在聊天里随时问。周末我还会用家里的 Windows。</p>
+      <p>每个 AI 其实都有自己的记忆，但<strong>只记自己那一份</strong>。Claude Code 记得的，Codex 不知道；在 Hermes 里定下的事，另外两个更不知道。三个孤岛。</p>
+      <p>所以目标很简单：<strong>任何一个 AI 开工，都读到同一份项目状态</strong>。换 AI 之前说一句「记一下状态」，换过去说「开工」，就能接着干。</p>
+      <p>那这份大脑里，到底要记什么？</p>
+    </aside>
+  </section>
+
+  <!-- P07 记什么不记什么 -->
+  <section class="slide p-brain dense" data-title="记什么不记什么">
+    <p class="kicker">大脑里记什么、不记什么</p>
+    <h2 class="h2">只记<em>会改变下次判断</em>的东西</h2>
+    <div class="pc" data-anim="fade-up">
+      <div class="yes"><h4>记</h4><ul>
+        <li>项目状态、下一步、卡在哪</li>
+        <li>做过的决定，和为什么这么定</li>
+        <li>还没验证的假设</li>
+        <li>更正过的结论，和根因</li>
+        <li>踩过的坑、攒下的经验</li>
+        <li>我的原话偏好</li>
+        <li>交付物放在哪</li>
+      </ul></div>
+      <div class="no"><h4>不记</h4><ul>
+        <li>聊天记录</li>
+        <li>操作过程的细节</li>
+        <li>密码、密钥、带登录凭证的链接</li>
+      </ul></div>
+    </div>
+    <p class="take mt-l">判断标准一句话：<b>这条写下来，会不会改变下次的判断？</b>不会就不记。</p>
+    <aside class="notes">
+      <p>左边是要记的：项目状态、下一步、卡在哪；做过的决定和原因；没验证的假设；<strong>更正过的结论和根因</strong>；经验；我的原话偏好；交付物在哪。</p>
+      <p>右边是不记的。重点说第一条：<strong>不记聊天记录</strong>。</p>
+      <p>这跟市面上很多「AI 记忆」工具的思路正好相反。它们是什么都录下来，用的时候再搜。我试过，后面会给数据：录得很全，但一半是噪音。</p>
+      <p>判断标准就一句话：<strong>这条写下来，会不会改变下次的判断</strong>？会，就记；不会，就不记。</p>
+      <p>知道记什么之后，下一个问题是：怎么记，谁来记。我先定了四条规矩。</p>
+    </aside>
+  </section>
+
+  <!-- P08 四条设计决定 -->
+  <section class="slide p-brain" data-title="四条规矩">
+    <p class="kicker">先定规矩，再定结构</p>
+    <h2 class="h2">四条规矩</h2>
+    <div class="steps" style="--n:4" data-anim="stagger-list">
+      <div><h4>只在两个时刻写</h4><p>每天 19:00 日结；我说「记一下状态」。对话进行中不写。</p></div>
+      <div><h4>所有 AI 一种格式</h4><p>三个 AI 用同一种条目，一个项目一条，彼此能读懂。</p></div>
+      <div><h4>各写各的</h4><p>每个 AI 只写自己的收件箱；长期文件只有汇总任务一个人写。</p></div>
+      <div><h4>矛盾不自动裁</h4><p>两个说法打架，两边都留着、标来源，等我回一个编号。</p></div>
+    </div>
+    <aside class="notes">
+      <p>四条规矩，每条说一句为什么。</p>
+      <p>第一条，<strong>只在两个时刻写</strong>：每天晚上七点日结，或者我说「记一下状态」。对话进行中不写。为什么？边聊边写，记下来的大多是半成品，噪音太大，还打断干活。</p>
+      <p>第二条，<strong>所有 AI 一种格式</strong>。三个 AI 写出来的东西长得一样，互相才读得懂。</p>
+      <p>第三条，<strong>各写各的</strong>。每个 AI 只往自己的收件箱写，长期文件只有汇总任务一个写者。这样谁写坏了，一查就知道。</p>
+      <p>第四条，<strong>矛盾不自动裁</strong>。Codex 说 A，Claude 说 B，系统不会按谁更晚来判谁对。两边都留着，等我回一个编号。<strong>让 AI 自己裁矛盾，一定会裁错几次</strong>。</p>
+      <p>规矩定了，再看它放在哪。</p>
+    </aside>
+  </section>
+
+  <!-- P09 目录结构 -->
+  <section class="slide p-brain dense" data-title="目录结构">
+    <p class="kicker">放在哪</p>
+    <h2 class="h2">Obsidian 里的一个文件夹，<em>没有服务器，没有数据库</em></h2>
+    <div class="split" style="grid-template-columns:1.7fr 1fr" data-anim="fade-up">
+<pre class="code">brain/
+  MAP.md                   <span class="c">机器、目录→项目、别名（我维护）</span>
+  <span class="hl">inbox/&lt;机器&gt;/&lt;AI&gt;/&lt;日期&gt;.md</span>   <span class="c">每天的原始条目，只追加</span>
+  <span class="hl">projects/&lt;项目&gt;/STATUS.md</span>   <span class="c">折叠后的当前状态</span>
+           DECISIONS · HYPOTHESES · LESSONS
+  lessons/                 <span class="c">通用经验、偏差档案</span>
+  user/PREFERENCES.md      <span class="c">我的原话偏好</span>
+  artifacts/               <span class="c">交付物库</span>
+  skills/                  <span class="c">共用插件，装一次三个 AI 都能用</span>
+  _meta/                   <span class="c">待裁定、周总结、运行记录</span></pre>
+      <div class="kpis" style="--n:1;gap:20px">
+        <div><b>90</b><span>个项目目录</span></div>
+        <div><b>3</b><span>个 AI 共用</span></div>
+        <div><b>0</b><span>台服务器</span></div>
+      </div>
+    </div>
+    <aside class="notes">
+      <p>大脑就是一个文件夹，放在 iCloud 同步的 Obsidian 库里。<strong>没有服务器，没有数据库</strong>，打开就能看，坏了也能手改。</p>
+      <p>大家重点看高亮的两行。</p>
+      <p><strong>inbox</strong> 是收件箱：每台机器、每个 AI、每一天一个文件，只追加，不改。</p>
+      <p><strong>projects</strong> 是折叠后的结果：每个项目一份 STATUS，另外还有决定、假设、经验。</p>
+      <p>原始条目和折叠后的状态分开放，这是第三部分「进化」的基础：收件箱是流水，STATUS 是结论。</p>
+      <p>从 9 月 14 号跑到现在，攒了 <strong>90 个项目目录</strong>，三个 AI 共用。</p>
+      <p>那收件箱里的一条，长什么样？</p>
+    </aside>
+  </section>
+
+  <!-- P10 一条条目 -->
+  <section class="slide p-brain" data-title="一条条目">
+    <p class="kicker">一条条目长什么样</p>
+    <h2 class="h2">一个项目一条，<em>每个维度一行</em></h2>
+<pre class="code" data-anim="fade-up" style="font-size:23px;padding:30px 36px">## 2026-09-13 19:00 · 日结 | 项目：iot-weekly-report | 来源：mac-main/claude-code
+- 做了：完成配网章节的数据核对；修复周环比公式
+- 决定：周报只发链接不发截图；原因：老板在手机上看链接更方便
+<span class="n">1</span><span class="hl">- 假设：崩溃率下降与 3.2.1 灰度有关（验证：对比分版本数据；到期 09-20）</span>
+- 下一步：把 W37 数据导入模板，生成预览
+<span class="n">2</span><span class="hl">- 更正：旧「主力版本固定为 3.1.0」→ 新「按全部活跃版本重算」；根因：沿用上季度口径没复核</span>
+<span class="n">3</span><span class="hl">- 偏好：「周报只要链接，别发截图」（09-13；范围：iot-weekly-report）</span>
+<span class="n">4</span><span class="hl">- 来源等级：做了为工具实测；决定、偏好为用户告知；假设为推断</span></pre>
+    <div class="grid g4 mt-m" style="gap:20px" data-anim="stagger-list">
+      <div class="card" style="padding:24px 28px"><p style="font-size:27px"><b>① 假设</b>：带验证方法和到期日，到期没回填会被点名</p></div>
+      <div class="card" style="padding:24px 28px"><p style="font-size:27px"><b>② 更正</b>：旧结论 → 新结论，带根因</p></div>
+      <div class="card" style="padding:24px 28px"><p style="font-size:27px"><b>③ 偏好</b>：我的原话，带日期和范围</p></div>
+      <div class="card" style="padding:24px 28px"><p style="font-size:27px"><b>④ 来源等级</b>：哪些实测、哪些我说的、哪些是推断</p></div>
+    </div>
+    <aside class="notes">
+      <p>这是一条真实条目，周报项目的。</p>
+      <p>第一行是标题：时间、类型、哪个项目、哪台机器哪个 AI 写的。下面每个维度一行：做了、决定、假设、下一步、更正、偏好、来源等级。缺的维度就不写。</p>
+      <p>四行高亮的，挑两行多说一句。</p>
+      <p><strong>更正</strong>：旧结论是什么，新结论是什么，<strong>根因</strong>是什么。根因最值钱，下次同样的坑就绕开了。</p>
+      <p><strong>来源等级</strong>：这条里哪些是工具实测的，哪些是我说的，哪些是 AI 推断的。这个下一页单独讲。</p>
+      <p>另外两行，假设一定带验证方法和到期日；偏好一定是我的原话。</p>
+    </aside>
+  </section>
+
+  <!-- P11 来源等级 -->
+  <section class="slide p-brain" data-title="来源等级">
+    <p class="kicker">每条结论都带出处</p>
+    <h2 class="h2">是实测的、我说的，<em>还是 AI 猜的</em></h2>
+    <div class="grid g3" data-anim="stagger-list">
+      <div class="card" style="--part:var(--good)"><span class="ic">🔬</span><h4>工具实测</h4><p>跑过命令、读过文件、写完回读过结果。</p></div>
+      <div class="card" style="--part:var(--clone)"><span class="ic">🗣️</span><h4>用户告知</h4><p>我在对话里说的原话。</p></div>
+      <div class="card" style="--part:var(--warn)"><span class="ic">🤔</span><h4>推断</h4><p>AI 自己的判断。可以有，必须标出来。</p></div>
+    </div>
+    <p class="take mt-l">写进大脑的、写进简报的，<b>都带这个标</b>。</p>
+    <aside class="notes">
+      <p>来源等级就三档。</p>
+      <p><strong>工具实测</strong>：跑过命令、读过文件、写完回读过。这一档最硬。</p>
+      <p><strong>用户告知</strong>：我在对话里说的原话。</p>
+      <p><strong>推断</strong>：AI 自己的判断。推断可以有，但<strong>必须标出来</strong>。</p>
+      <p>为什么这么在意？因为 AI 最常见的问题，是把猜的说得跟查过的一样笃定。标了来源，我扫一眼就知道哪句要再核一下。</p>
+      <p>这条纪律会贯穿今天三个部分，最后的忠告里我还会回到这里。</p>
+      <p>条目讲完，再看条目被折叠之后的样子：STATUS。</p>
+    </aside>
+  </section>
+
+  <!-- P12 STATUS -->
+  <section class="slide top p-brain dense" data-title="STATUS">
+    <p class="kicker">折叠之后</p>
+    <h2 class="h2">AI 开工<em>只读这一页</em>，不读历史</h2>
+    <div class="split" data-anim="fade-up">
+      <div class="doc">
+        <h5># brain · 当前状态</h5>
+        <h5>目标</h5><p>多个 AI 共用一份记忆：每天写收件箱，汇总后折叠成项目状态、决定、假设、经验和偏好。</p>
+        <h5>现状</h5><p>日、周、月汇总由定时任务运行：每天 02:00，周一 12:30，每月 1 日 12:30；每天 09:00 巡检。</p>
+        <h5>假设（待验证）</h5><p>调整后第二周，会话覆盖率 ≥95%、噪音 ≤30%；验证：10-24 复盘；到期 10-24。</p>
+        <h5>下一步</h5><p>复盘达标就写出日结补漏的改法，等我说「改」再动技能。 · claude-code · 10-17</p>
+        <h5>阻塞</h5><p>4 项合并建议等我裁定。</p>
+        <div class="mark"><h5>已更正（30 天）</h5><p>从「日结可以无人值守」更正为「定时汇总会因模型通道挂起而静默失败」；根因：只依赖一个模型通道，失败只记在本地、不通知。</p></div>
+      </div>
+      <div class="rows">
+        <div><div><b>只读这一页</b><span>目标、现状、假设、下一步、阻塞、已更正、偏好。历史不读。</span></div></div>
+        <div><div><b>「已更正」是红线</b><span>旧结论在这里标失效，AI 开工时明令不再用。</span></div></div>
+        <div><div><b>下一步带出处</b><span>谁在哪天说的，能追回去。</span></div></div>
+      </div>
+    </div>
+    <aside class="notes">
+      <p>左边是大脑这个项目自己的 STATUS，删减过。</p>
+      <p>AI 开工<strong>只读这一页</strong>：目标、现状、假设、下一步、阻塞、已更正、偏好。历史不读，读了反而乱。</p>
+      <p>重点看红框，<strong>「已更正」</strong>。这里写的是：我原来以为日结可以无人值守，后来发现模型通道一挂，汇总就静默失败，而且没人知道。旧结论写在这里，<strong>AI 开工时明令不再用</strong>。</p>
+      <p>这一段解决的是 AI 最烦人的一个毛病：你纠正过它一次，换个会话它又犯。</p>
+      <p>还有一点，下一步后面带着「claude-code · 10-17」。谁在哪天说的，都能追回去。</p>
+      <p>下面讲大脑里最像我的那一部分。</p>
+    </aside>
+  </section>
+
+  <!-- P13 我的原话 -->
+  <section class="slide p-brain dense" data-title="我的原话">
+    <p class="kicker">大脑里最像我的部分</p>
+    <h2 class="h2">我的原话，<em>不改写，不总结</em></h2>
+    <div class="quotes" data-anim="stagger-list">
+      <div><q>报告就是报告，它是报告本身，而不是你调整的记录，或者是你分析的过程</q><span>2026-10-13 · 全局</span></div>
+      <div><q>你说的英文我看不懂</q><span>2026-10-13 · 全局</span></div>
+      <div><q>不要有『对他』『对生意』『对交付』这种话，这几个字就很 AI，不是人话</q><span>2026-10-11 · 全局写作</span></div>
+      <div><q>我的老板不会关心这43个项目里包不包含暂停的某一个项目的。这就不是我的视角</q><span>2026-10-14 · 全局</span></div>
+    </div>
+    <p class="take mt-l">我的原话直接入库，不再问我；<b>AI 推断出来的偏好，必须我确认</b>。</p>
+    <aside class="notes">
+      <p>这一页可以放慢一点。</p>
+      <p>这些是偏好库里的真实条目，<strong>全是我的原话</strong>，AI 不改写、不总结，带日期和适用范围。</p>
+      <p>比如「报告就是报告」这条：以前 AI 给我写汇报，总爱在里面加「本版调整了什么」「数据来自哪里」，我说了一次，现在三个 AI 都不加了。</p>
+      <p>「你说的英文我看不懂」，也是说一次，三个 AI 都改。</p>
+      <p>还有一条规矩：<strong>原话直接入库，不再问我</strong>；但如果是 AI 自己推断出来的偏好，比如「用户好像喜欢表格」，<strong>必须我确认</strong>才算数。</p>
+      <p>这些话我每句只说过一次，现在三个 AI 都记得。</p>
+      <p>讲到这儿，一般就有人问了：这不就是把你的脑子上传了吗？</p>
+    </aside>
+  </section>
+
+  <!-- P14 大脑的边界 -->
+  <section class="slide p-brain" data-title="大脑的边界">
+    <p class="kicker">大脑的边界</p>
+    <h2 class="h2">大脑是我的，<em>AI 只负责读和写回</em></h2>
+    <ul class="check" data-anim="stagger-list">
+      <li>不记聊天记录</li>
+      <li>不写密钥<small>写入脚本发现疑似密钥，直接拒写</small></li>
+      <li>敏感条目单独隔离</li>
+      <li>AI 推断的偏好，必须我确认</li>
+      <li>矛盾不自动裁决，等我回编号</li>
+    </ul>
+    <aside class="notes">
+      <p>回答一下「上传脑子」这个问题。</p>
+      <p>大脑有五条边界。<strong>不记聊天记录</strong>，前面说过。<strong>不写密钥</strong>：写入是走脚本的，脚本发现疑似密码或 token，直接拒绝写入。<strong>敏感条目单独隔离</strong>，不进普通文件。<strong>AI 推断的偏好必须我确认</strong>。<strong>矛盾不自动裁决</strong>。</p>
+      <p>所以准确地说：<strong>大脑是我的</strong>，存在我自己的文件夹里；AI 只负责读，和按规矩写回。</p>
+      <p>大脑讲完了。第二部分，讲 AI 开工那一刻发生什么。</p>
+    </aside>
+  </section>
+
+<!-- ================= 第二部分 分身 ================= -->
+
+  <!-- P15 章节页 -->
+  <section class="slide mid p-clone" data-title="第二部分 分身">
+    <div class="fx-bg" data-fx="constellation"></div>
+    <p class="kicker">第二部分</p>
+    <h2 class="sec-title" data-anim="fade-up"><span class="emo">🪞</span> 分身：先复述，再动手</h2>
+    <p class="lede">每个 AI 开工先读大脑，再把这次要做的事复述成五行简报，我回一句「确认」它才开始。</p>
+    <div class="toc focus mt-l">
+      <div class="t-brain"><div class="no">01</div><h3>大脑</h3></div>
+      <div class="t-clone on"><div class="no">02</div><h3>分身</h3></div>
+      <div class="t-evolve"><div class="no">03</div><h3>进化</h3></div>
+    </div>
+    <aside class="notes">
+      <p>第二部分，<strong>分身</strong>。</p>
+      <p>大脑解决的是「它知不知道」。分身这一段解决的是「它懂没懂我这次要什么」。</p>
+      <p>办法就一个：<strong>先复述，再动手</strong>。这一段是今天最容易照抄的部分，不需要任何基础设施，明天就能用。</p>
+    </aside>
+  </section>
+
+  <!-- P16 三种跑偏 -->
+  <section class="slide p-clone" data-title="三种跑偏">
+    <p class="kicker">指令跑偏的三种典型</p>
+    <h2 class="h2">跑偏，是因为<em>它没机会复述</em></h2>
+    <div class="grid g3" data-anim="stagger-list">
+      <div class="card"><span class="tag">口径猜错</span><h4>词听错了</h4><p>绑定率当成配网成功率，设备活跃当成设备在线。<br>我说要几个 AI 共享记忆，它照着旧方案做成了边聊边写；我要的是每天定点写一次。</p></div>
+      <div class="card"><span class="tag">范围自己扩</span><h4>多做了</h4><p>「帮我完善一下」，被做成了重写。<br>「改一下报告」，顺手改了数据口径。</p></div>
+      <div class="card"><span class="tag">一次当长期</span><h4>记错了</h4><p>「你先帮我把目标写了」，被记成了一条长期偏好。</p></div>
+    </div>
+    <p class="take mt-l">三种跑偏，<b>都能在动手前那一次复述里拦下来</b>。</p>
+    <aside class="notes">
+      <p>先看跑偏都长什么样。三种。</p>
+      <p>第一种，<strong>口径猜错</strong>。我们做 IoT 看板的时候，AI 把<strong>设备绑定率</strong>当成了配网成功率，把<strong>设备活跃</strong>当成了设备本身在线。这两个口径在座各位都知道不一样，AI 不知道，因为没人在它动手前让它复述一遍。</p>
+      <p>再举一个，就发生在搭这个大脑的第一天：我说要几个 AI 共享记忆，它照着我以前用过的旧方案，做成了边聊边写；我要的是每天定点写一次。根因是它没先确认我换机器、换 AI 的节奏，就按旧方案推下去了。这条现在还在我的偏差档案里。</p>
+      <p>第二种，<strong>范围自己扩</strong>。「帮我完善一下」，它给你重写了；「改一下报告」，它顺手把数据口径也改了。</p>
+      <p>第三种，<strong>一次性要求当成长期规矩</strong>。我有一次说「你先帮我把目标写了」，它把这句记进了长期偏好。</p>
+      <p>这三种，<strong>只要它动手前复述一遍，我看一眼就能拦下来</strong>。怎么复述？五行。</p>
+    </aside>
+  </section>
+
+  <!-- P17 五行格式 -->
+  <section class="slide p-clone" data-title="开工简报">
+    <p class="kicker">开工简报</p>
+    <h2 class="h2">五行，<em>一次确认</em>，之后不再反复问</h2>
+<pre class="code" data-anim="fade-up" style="font-size:34px;line-height:1.75"><span class="k">开工简报 vN｜待确认</span>
+<span class="v">目标：</span>最终要改变什么状态，成果给谁用、支持什么行动
+<span class="v">要做的事：</span>主要交付物、判断规则、允许的操作与边界
+<span class="v">验收标准：</span>检查什么、怎么检查、什么结果算通过
+<span class="v">阻塞或待决策：</span>确有才写
+<span class="v">确认后的动作：</span>开始执行，或只交付目标 / 提示词</pre>
+    <div class="grid g3 mt-l" data-anim="stagger-list" style="grid-template-columns:1fr 1fr 1.25fr">
+      <div class="card" style="padding:28px 32px"><p><b>回一句「确认」</b>，它在简报范围内一路做完</p></div>
+      <div class="card" style="padding:28px 32px"><p><b>简单任务压成三行</b>，不硬凑栏目</p></div>
+      <div class="card" style="padding:28px 32px"><p><b>结尾一段话装好</b>，不用自己抄</p></div>
+    </div>
+    <aside class="notes">
+      <p>这就是开工简报。<strong>今天最值得带走的一个东西</strong>。大家不用拍照，也不用抄，结尾我给一段话，发给你的 AI，它自己就装好了。</p>
+      <p>五行：<strong>目标</strong>，最终要改变什么状态，给谁用；<strong>要做的事</strong>，交付什么、按什么规则、能动哪些东西；<strong>验收标准</strong>，怎么算做完；<strong>阻塞</strong>，有才写；<strong>确认后的动作</strong>，是开始干，还是只给我一份提示词。</p>
+      <p>我回一句<strong>「确认」</strong>，它就在这个范围里一路做完，中间不再一步一问。</p>
+      <p>简单任务压成三行就行，不硬凑。</p>
+      <p>还记得开头那个暂停键吗？<strong>验收标准这一行，就是专门防暂停键的</strong>。要是那个 AI 动手前先写出「验收：游戏一直没结束」，你一眼就看出问题，补一句「要一直玩，消的行越多越好」。</p>
+      <p>那是不是每句话都要先出一份简报？不是。看下一页。</p>
+    </aside>
+  </section>
+
+  <!-- P18 触发与不触发 -->
+  <section class="slide p-clone" data-title="什么时候出简报">
+    <p class="kicker">什么时候出简报</p>
+    <h2 class="h2">按目标、交付物、范围判断，<em>不按消息条数</em></h2>
+    <div class="pc" data-anim="fade-up">
+      <div class="yes"><h4>出简报</h4><ul>
+        <li>新的、要动手的活</li>
+        <li>改文件、出正式交付物</li>
+        <li>批量处理数据</li>
+        <li>往外部系统写东西</li>
+      </ul></div>
+      <div class="no"><h4>不出简报</h4><ul>
+        <li>纯问答</li>
+        <li>同一件事确认后的续作、修复、验证、汇报</li>
+        <li>只改措辞或排版</li>
+      </ul></div>
+    </div>
+    <aside class="notes">
+      <p>左边是要出简报的：新的、要动手的活。改文件、出正式交付物、批量处理数据、往外部系统写东西。</p>
+      <p>右边，<strong>重点看右边</strong>，不出简报的：纯问答；同一件事确认之后的续作、修 bug、验证、汇报；只改措辞或排版。</p>
+      <p>为什么强调右边？因为规则一推下去，大家最容易走到另一个极端：问个天气它也先给你出份简报。那就烦死了。</p>
+      <p>判断标准：<strong>按目标、交付物、范围变没变</strong>来判断，不按聊了几条消息。</p>
+      <p>决定要出简报了，写之前 AI 还要做一件事。</p>
+    </aside>
+  </section>
+
+  <!-- P19 简报之前 -->
+  <section class="slide p-clone" data-title="简报之前">
+    <p class="kicker">写简报之前</p>
+    <h2 class="h2">先把三类东西<em>分开</em></h2>
+    <div class="grid g3" data-anim="stagger-list">
+      <div class="card"><span class="ic">✅</span><h4>我已经决定的</h4><p>我在对话里定下的范围、口径、要求。</p></div>
+      <div class="card"><span class="ic">🔎</span><h4>工具核验到的</h4><p>实际读到的文件、查到的数据、看到的现场。</p></div>
+      <div class="card"><span class="ic">💡</span><h4>AI 的建议和假设</h4><p>它觉得该怎么做、它猜的东西，单独标出来。</p></div>
+    </div>
+    <div class="grid g2 mt-l" data-anim="fade-up">
+      <p class="take" style="margin:0">只读写简报<b>必需</b>的材料，不为了填简报先把活干一半。</p>
+      <p class="take" style="margin:0">材料读不到，就写<b>读不到</b>，不猜内容、数量、状态。</p>
+    </div>
+    <aside class="notes">
+      <p>写简报之前，AI 要先把三类东西分开：<strong>我已经决定的</strong>，<strong>工具核验到的</strong>，<strong>它自己的建议和假设</strong>。</p>
+      <p>这其实就是前面那个来源等级，用在了简报上。</p>
+      <p>下面两条也很实用。</p>
+      <p>第一，<strong>只读必需的材料</strong>。有的 AI 为了把简报写漂亮，先把活干了一半，再来问你确不确认。那确认就没意义了。</p>
+      <p>第二，<strong>读不到就写读不到</strong>。不猜内容、不猜数量、不猜状态。</p>
+      <p>那如果我的话本身就说不清楚呢？</p>
+    </aside>
+  </section>
+
+  <!-- P20 目标不清时怎么问 -->
+  <section class="slide p-clone" data-title="目标不清时">
+    <p class="kicker">目标不清时</p>
+    <h2 class="h2">只问<em>会改变结果</em>的问题，一轮不超过三个</h2>
+    <div class="grid g2" data-anim="fade-up">
+      <div class="card">
+        <span class="tag">例子</span>
+        <h4>「把周报做得更有价值」</h4>
+        <p>先问两件事：给谁看？支持什么决定？</p>
+        <ul class="mt-m">
+          <li>给主管协调阻塞：写清卡点、责任人、要谁出面</li>
+          <li>给老板看风险：写清哪些项目会延期、影响多大</li>
+        </ul>
+        <p class="mt-m">用途不同，是两份完全不同的周报。</p>
+      </div>
+      <div class="card">
+        <span class="tag">规矩</span>
+        <h4>AI 想多做一点时</h4>
+        <ul>
+          <li>说清改什么、为什么、代价是什么，标成「建议」</li>
+          <li>复述、消歧、补上我已经定的条件：可以直接写</li>
+          <li>加交付物、改指标、改优先级：必须标建议，等我点头</li>
+        </ul>
+      </div>
+    </div>
+    <aside class="notes">
+      <p>目标不清的时候，AI 该问。但<strong>只问会改变结果的问题</strong>，一轮不超过三个。</p>
+      <p>左边的例子：「把周报做得更有价值」。这句话太虚了。先问两件事：<strong>给谁看，支持什么决定</strong>。给主管看是为了协调阻塞，要写卡点和责任人；给老板看是为了判断风险，要写哪些会延期。两份完全不同的周报。</p>
+      <p>右边是 AI 想多做一点的时候的规矩。它可以提建议，但要说清楚改什么、为什么、代价是什么，<strong>标成「建议」</strong>。</p>
+      <p>复述、消歧、补上我已经定的条件，这些可以直接写。但<strong>加交付物、改指标、改优先级</strong>，必须标成建议等我点头。不能借着「帮你完善一下目标」替我把范围扩了。</p>
+    </aside>
+  </section>
+
+  <!-- P21 规则与验收 -->
+  <section class="slide p-clone" data-title="判断规则与验收标准">
+    <p class="kicker">简报里最容易混的两行</p>
+    <h2 class="h2">一个管过程，<em>一个管结果</em></h2>
+    <div class="grid g2" data-anim="fade-up">
+      <div class="card"><span class="tag">判断规则 · 管过程</span><h4>做的时候怎么选</h4><p>按评价 ID 去重；同一个 ID 内容冲突的，标「待核实」。</p></div>
+      <div class="card" style="--part:var(--good)"><span class="tag">验收标准 · 管结果</span><h4>做完怎么验</h4><p>每条结果都能追到评价 ID；输入总数和各去向数量对得上。</p></div>
+    </div>
+    <p class="take mt-l">数据任务<b>先定统计单位</b>。拆分、多标签、合并的场景保留 ID 映射，不拿输出行数冒充输入数量。</p>
+    <aside class="notes">
+      <p>简报里最容易混的是这两行：判断规则和验收标准。</p>
+      <p><strong>判断规则管过程</strong>：做的时候遇到岔路怎么选。比如按评价 ID 去重，同一个 ID 内容冲突的标待核实。</p>
+      <p><strong>验收标准管结果</strong>：做完怎么验。比如每条结果都能追到评价 ID，输入总数和各去向的数量加起来对得上。</p>
+      <p>做数据的同事应该很有体会：<strong>数量守恒</strong>。一千条进来，分到五个去向，五个加起来得是一千。</p>
+      <p>但有个坑：如果一条评价能打多个标签，输出行数就会比输入多。这时候要先定<strong>统计单位</strong>，保留 ID 映射，不能拿输出行数冒充输入数量。</p>
+    </aside>
+  </section>
+
+  <!-- P22 确认之后 -->
+  <section class="slide p-clone" data-title="确认之后">
+    <p class="kicker">确认之后</p>
+    <h2 class="h2">「确认」只覆盖<em>简报里写了的</em>范围</h2>
+    <div class="steps" style="--n:3" data-anim="stagger-list">
+      <div><h4>范围</h4><p>删除、覆盖、对外发送、公开发布，简报里没写，就不因一句「确认」自动放行。</p></div>
+      <div><h4>纠偏</h4><p>目标、交付物、范围、口径、边界、验收，任何一项变了：停下，出 v2，等确认。其余的吸收后继续。</p></div>
+      <div><h4>交付</h4><p>说清三件事：做了什么；结果和验证证据；哪里还要我决定。没通过的，不能写成完成。</p></div>
+    </div>
+    <aside class="notes">
+      <p>我回了「确认」之后，有三条规矩。</p>
+      <p>第一，<strong>范围</strong>。确认只覆盖简报里写了的。删除、覆盖、对外发消息、公开发布，简报里没写，就不能因为我说了句「确认」就自动做。暂停键就是这种没写进去的东西。</p>
+      <p>第二，<strong>纠偏</strong>。做着做着发现要改。如果改的是目标、交付物、范围、口径、边界、验收这六样之一，<strong>停下，出 v2，重新等我确认</strong>。其他的小调整，吸收了继续干，别来烦我。</p>
+      <p>第三，<strong>交付</strong>。最后说清三件事：做了什么，结果和证据，哪里还要我决定。<strong>没验证通过的，不能写成完成</strong>。</p>
+    </aside>
+  </section>
+
+  <!-- P23 六项自检 -->
+  <section class="slide p-clone" data-title="六项自检">
+    <p class="kicker">AI 内部做，不逐项展示</p>
+    <h2 class="h2">六项自检</h2>
+    <div class="grid g3" data-anim="stagger-list">
+      <div class="card"><h4>终点</h4><p>目的、交付物、完成条件分开。交了方案不等于指标变好了。</p></div>
+      <div class="card"><h4>起点</h4><p>已知事实、缺口、依赖。</p></div>
+      <div class="card"><h4>判断规则</h4><p>容易猜错的取舍，写成「条件 → 动作 → 例外」。</p></div>
+      <div class="card"><h4>操作边界</h4><p>能读、能改、能新建、能发送的各是什么。</p></div>
+      <div class="card"><h4>影响预览</h4><p>会改哪些东西、怎么验证。不知道的数量标待核验，不写成零。</p></div>
+      <div class="card"><h4>结果验证</h4><p>每句「做完了」都有能检查的证据。</p></div>
+    </div>
+    <aside class="notes">
+      <p>这一页半分钟带过。</p>
+      <p>这是 AI 写简报之前在心里过的六项：<strong>终点、起点、判断规则、操作边界、影响预览、结果验证</strong>。</p>
+      <p>它不会把这六项一条条列给你看，那样太长。但每一项都会体现在那五行简报里。</p>
+      <p>挑一个说：<strong>影响预览</strong>里有一句，「不知道的数量标待核验，不写成零」。AI 很爱把「没查到」写成「0 条」，这两个意思差得很远。</p>
+      <p>好，简报讲完了。那简报和大脑是怎么接上的？</p>
+    </aside>
+  </section>
+
+  <!-- P24 两半拼成一份简报 -->
+  <section class="slide p-clone" data-title="大脑和简报怎么接上">
+    <p class="kicker">大脑和简报怎么接上</p>
+    <h2 class="h2">上半段来自大脑，<em>下半段来自这次的任务</em></h2>
+    <div class="flow" data-anim="fade-up">
+      <div class="ins">
+        <div class="card" style="--part:var(--brain)"><span class="tag">brain-load · 读大脑</span><p>目标、现状、下一步、阻塞、已更正、相关偏好</p></div>
+        <div class="card"><span class="tag">goal-alignment · 对齐这次</span><p>目标、要做的事、验收标准</p></div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="out">
+        <h4>一份开工简报</h4>
+        <div class="half"><b>我对这个项目的认识对不对？</b><br>现状、下一步、已更正</div>
+        <div class="half"><b>我对你这次要求的理解对不对？</b><br>目标、要做的事、验收</div>
+      </div>
+    </div>
+    <p class="take mt-l">同一段指令三处一致：Claude Code 的 <b>CLAUDE.md</b>、Codex 的 <b>AGENTS.md</b>、Hermes 的配置。三个 AI，一套规矩。</p>
+    <aside class="notes">
+      <p>这一页把第一部分和第二部分接起来。</p>
+      <p>左边两个输入。上面是 <strong>brain-load</strong>，开工时读大脑，读出目标、现状、下一步、阻塞、已更正、相关偏好。下面是 <strong>goal-alignment</strong>，把我这次说的话对齐成目标、要做的事、验收。</p>
+      <p>两个合成一份开工简报。所以 AI 让我确认的，其实是<strong>两件事</strong>：它对这个项目的认识对不对；它对我这次要求的理解对不对。</p>
+      <p>还有一点：这段指令，我在三个 AI 的配置里放的是<strong>同一段</strong>。Claude Code 是 CLAUDE.md，Codex 是 AGENTS.md，Hermes 是它的配置。不然三个 AI 三套规矩，又乱了。</p>
+      <p>同一套规矩有了。还有一样东西，三个 AI 也得一样：插件。</p>
+    </aside>
+  </section>
+
+  <!-- 共用插件 -->
+  <section class="slide p-clone" data-title="三个分身，一套插件">
+    <p class="kicker">三个分身，一套插件</p>
+    <h2 class="h2">插件也放进大脑，<em>装一次，三个 AI 都能用</em></h2>
+    <div class="chain" data-anim="fade-up">
+      <div class="card" style="--part:var(--brain)"><span class="ic">🧠</span><h4>大脑 skills/</h4><p>唯一的源，跟大脑一起同步到每台电脑</p></div>
+      <div class="arrow">→<small>同步一次</small></div>
+      <div class="card"><span class="ic">📂</span><h4>本机共用目录</h4><p class="mono-s">~/.agents/skills</p></div>
+      <div class="arrow">→</div>
+      <div class="ais">
+        <div class="card mini"><b>Codex</b><span>原生就读这个目录</span></div>
+        <div class="card mini"><b>Claude Code</b><span>脚本自动建软链接</span></div>
+        <div class="card mini"><b>Hermes</b><span>配置里加一个外部目录</span></div>
+      </div>
+    </div>
+    <p class="take">换一台电脑：大脑同步过去，再跑一次同步，<b>插件全带过去</b>。</p>
+    <aside class="notes">
+      <p>三个分身有了同一个大脑、同一套开工规矩。还差一样：<strong>同一套工具</strong>。</p>
+      <p>AI 的插件，现在一般叫技能。我以前是给 Claude Code 装一份，给 Codex 再装一份，Hermes 再来一份。三份很快就对不上了，改了一个，忘了另外两个。</p>
+      <p>现在<strong>插件也放进大脑</strong>。大脑里有个 skills 目录，这是唯一的源。每台电脑跑一次同步，插件就放进本机一个共用目录。Codex 原生就读这个目录；Claude Code 由脚本自动建软链接；Hermes 在配置里加一行外部目录。</p>
+      <p>所以<strong>装一次，三个 AI 都能用</strong>。换一台电脑，大脑同步过去，再跑一次同步，插件全带过去。</p>
+      <p>这样不管叫哪个分身干活，手上都是同一套工具，不会乱。怎么接通，放到最后「现在就装」，一句话的事。</p>
+      <p>好，大脑、规矩、插件都齐了，现场跑一次。</p>
+    </aside>
+  </section>
+
+  <!-- P25 现场演示 -->
+  <section class="slide p-clone" data-title="现场演示">
+    <p class="kicker">现场演示</p>
+    <h2 class="h2">看它<em>先复述，再动手</em></h2>
+    <div class="steps" style="--n:3" data-anim="stagger-list">
+      <div><h4>一句含糊的需求</h4><code>把这周的 IoT 周报做得更有价值</code></div>
+      <div><h4>它先出简报，问一个问题</h4><p>上半段是从大脑读出来的现状；下半段问我：给谁看，支持什么决定。</p></div>
+      <div><h4>回「确认」</h4><p>看它在简报范围里一路做完，最后交代做了什么、怎么验的。</p></div>
+    </div>
+    <aside class="notes">
+      <p>（切到演示窗口。现场卡住就放备用录屏。）</p>
+      <p>我输入一句很含糊的话：<strong>「把这周的 IoT 周报做得更有价值」</strong>。</p>
+      <p>大家注意看它的第一反应。它没有直接开始写。它先读大脑，把这个项目的现状、上次做到哪读出来。然后问我一个问题：<strong>给谁看，支持什么决定</strong>。</p>
+      <p>我回答：给老板看风险。它出一份 v1 简报。</p>
+      <p>我回<strong>「确认」</strong>。接下来它一路做完，中间不再问我。最后告诉我做了什么、怎么验证的、哪里还要我定。</p>
+      <p>（回到 PPT。）对照组我提前录好了：同样的需求不出简报直接做，大家看它跑偏在哪。</p>
+      <p>第二部分讲完。最后一部分，大脑怎么一天天长。</p>
+    </aside>
+  </section>
+
+<!-- ================= 第三部分 进化 ================= -->
+
+  <!-- P26 章节页 -->
+  <section class="slide mid p-evolve" data-title="第三部分 进化">
+    <div class="fx-bg" data-fx="constellation"></div>
+    <p class="kicker">第三部分</p>
+    <h2 class="sec-title" data-anim="fade-up"><span class="emo">🧬</span> 进化：每天长一点</h2>
+    <p class="lede">每个 AI 每天把工作写回大脑；错的标失效，对的留下；矛盾由我裁定。</p>
+    <div class="toc focus mt-l">
+      <div class="t-brain"><div class="no">01</div><h3>大脑</h3></div>
+      <div class="t-clone"><div class="no">02</div><h3>分身</h3></div>
+      <div class="t-evolve on"><div class="no">03</div><h3>进化</h3></div>
+    </div>
+    <aside class="notes">
+      <p>第三部分，<strong>进化</strong>。</p>
+      <p>前两部分讲的是读：AI 开工读大脑，再对齐这次的任务。这一部分讲写回去，以及写回去之后，大脑怎么<strong>越用越准</strong>。</p>
+      <p>这一段我会把踩过的坑也摊开讲，包括现在还没改好的。</p>
+    </aside>
+  </section>
+
+  <!-- P27 四个技能 -->
+  <section class="slide p-evolve" data-title="四个技能">
+    <p class="kicker">读、写、找、折叠</p>
+    <h2 class="h2">四个动作，<em>四个技能</em></h2>
+    <table class="tbl" data-anim="fade-up">
+      <tr><th style="width:18%">技能</th><th style="width:16%">动作</th><th>它做什么</th></tr>
+      <tr><td><span class="mono">brain-load</span></td><td>开工读</td><td>只读 STATUS、还没折叠的条目、本项目经验、偏好、到期假设、待裁定；汇总没按时跑会提醒；输出 40 行内的开工简报</td></tr>
+      <tr><td><span class="mono">brain-note</span></td><td>写回去</td><td>「记一下状态」手动写；「存一下」存交付物；每天 19:00 自动日结。脚本校验格式、拒绝疑似密钥、写完回读</td></tr>
+      <tr><td><span class="mono">brain-find</span></td><td>找回来</td><td>「把之前那个 X 发我」：按描述查交付物库，核对文件指纹，再按当前渠道发给我</td></tr>
+      <tr><td><span class="mono">brain-merge</span></td><td>折叠</td><td>每天 02:00 汇总，周一 12:30 周总结，每月 1 日 12:30 月度归纳；只由定时任务调用</td></tr>
+    </table>
+    <aside class="notes">
+      <p>整套东西就四个技能，对应四个动作。</p>
+      <p><strong>brain-load，开工读</strong>。前面讲过，只读 STATUS 和还没折叠的条目，不读历史。它还会看一眼日结和汇总有没有按时跑，没跑就在简报第一行提醒。</p>
+      <p><strong>brain-note，写回去</strong>。三种写法：我说「记一下状态」；我说「存一下」，把交付物存进库；每天晚上七点自动日结。写入全走脚本：格式不对拒写，像密钥的拒写，写完还要回读一遍。</p>
+      <p><strong>brain-find，找回来</strong>。「把之前那个周报发我」，任何一个 AI 都能找，找到先核对文件没被改过，再发。</p>
+      <p><strong>brain-merge，折叠</strong>。这个只由定时任务调用，凌晨两点把一天的条目折叠进各项目的 STATUS。</p>
+      <p>这四个串起来，就是一天的流转。</p>
+    </aside>
+  </section>
+
+  <!-- P28 一天的流转 -->
+  <section class="slide p-evolve" data-title="一天的流转">
+    <p class="kicker">一天的流转</p>
+    <h2 class="h2">我只开口三次，<em>其余自动</em></h2>
+    <div class="tl" data-anim="stagger-list">
+      <div class="say"><i></i><b>开工</b><span>读大脑，出简报</span><em>我说「开工」</em></div>
+      <div><i></i><b>干活</b><span>确认后一路做完</span><em>自动</em></div>
+      <div class="say"><i></i><b>换 AI 前</b><span>写一条状态</span><em>我说「记一下状态」</em></div>
+      <div><i></i><b>19:00</b><span>各 AI 日结<br>21:00 再补一次</span><em>自动</em></div>
+      <div><i></i><b>02:00</b><span>折叠进各项目 STATUS</span><em>自动</em></div>
+      <div><i></i><b>周一</b><span>周总结：上周说的做了没</span><em>自动</em></div>
+      <div class="say"><i></i><b>有事要定</b><span>合并、偏好、矛盾</span><em>我回一个编号</em></div>
+    </div>
+    <aside class="notes">
+      <p>这是一天的流转。实心的点是我要开口的地方，一共三处。</p>
+      <p>早上开工，我说<strong>「开工」</strong>，它读大脑、出简报。确认之后它自己干。</p>
+      <p>要换 AI 了，我说<strong>「记一下状态」</strong>。</p>
+      <p>剩下的全自动：晚上七点各 AI 日结，九点再补录一次七点之后的工作；凌晨两点折叠进各项目的 STATUS；周一出周总结。</p>
+      <p>最后一处是<strong>有事要我定</strong>的时候，比如两个项目要不要合并、某条推断出来的偏好算不算数。它把选项列好，我<strong>回一个编号</strong>就行。</p>
+      <p>这是流转。那「进化」到底体现在哪？</p>
+    </aside>
+  </section>
+
+  <!-- P29 大脑怎么进化 -->
+  <section class="slide p-evolve dense" data-title="大脑怎么进化">
+    <p class="kicker">大脑怎么进化</p>
+    <h2 class="h2">靠五个机制，<em>不靠多记</em></h2>
+    <div class="grid g2" data-anim="fade-up">
+      <div class="card" style="--part:var(--bad)"><span class="tag">去掉错的</span>
+        <div class="rows" style="--part:var(--bad)">
+          <div><div><b>更正</b><span>旧结论 → 新结论，带根因；进「已更正」，AI 不再用</span></div></div>
+          <div><div><b>假设回填</b><span>带验证方法和到期日；到期按证据判成立或推翻</span></div></div>
+        </div>
+      </div>
+      <div class="card"><span class="tag">留下对的</span>
+        <div class="rows">
+          <div><div><b>经验累计</b><span>同一经验多次出现并验证，起草成几个 AI 共用的技能</span></div></div>
+          <div><div><b>周总结与月度归纳</b><span>上周说的做了没、哪些停滞；每月归纳并修剪</span></div></div>
+          <div><div><b>偏好累积</b><span>原话越攒越多，AI 越来越按我的口径说话</span></div></div>
+        </div>
+      </div>
+    </div>
+    <aside class="notes">
+      <p>进化靠五个机制，分两组。</p>
+      <p>左边是<strong>去掉错的</strong>。一是<strong>更正</strong>：旧结论标失效，带根因，AI 不再用。二是<strong>假设回填</strong>：每条假设都有到期日，到期了按证据判，成立就转成结论，推翻就不再引用。</p>
+      <p>右边是<strong>留下对的</strong>。三是<strong>经验累计</strong>：同一条经验反复出现、被验证过，就起草成几个 AI 共用的技能。老实说这一条目前还没触发过，门槛定高了，在调。四是<strong>周总结和月度归纳</strong>：每周一问「上周说要做的做了没」，哪些项目停了；每月归纳一次，顺手修剪过期的东西。五是<strong>偏好累积</strong>。</p>
+      <p>所以大脑变准，靠的是<strong>错的会被划掉</strong>。光往里堆，它只会越来越乱。</p>
+    </aside>
+  </section>
+
+  <!-- 人在 Obsidian 里看大脑 -->
+  <section class="slide dense p-evolve" data-title="人在 Obsidian 里看大脑">
+    <p class="kicker">这些东西在哪看</p>
+    <h2 class="h2">AI 负责写，<em>人在 Obsidian 里看</em></h2>
+    <div class="split" style="grid-template-columns:1.5fr 1fr;gap:56px;align-items:center" data-anim="fade-up">
+      <div class="obs" aria-label="Obsidian 窗口：大脑的文件树和一条经验">
+        <div class="obs-bar"><i></i><i></i><i></i><span>brain · lessons/LESSONS.md</span></div>
+        <div class="obs-body">
+          <ul class="obs-tree">
+            <li>brain</li>
+            <li class="d1">projects</li>
+            <li class="d1">lessons</li>
+            <li class="d2 on">LESSONS.md</li>
+            <li class="d2">CORRECTIONS.md</li>
+            <li class="d2">INDEX.md</li>
+            <li class="d1">_meta</li>
+            <li class="d2">weekly</li>
+            <li class="d2">monthly</li>
+            <li class="d1">user</li>
+          </ul>
+          <div class="obs-note">
+            <h5>L-2026-09-14-03</h5>
+            <p class="obs-tags"><span>自动化</span><span>幂等</span><span>查重</span></p>
+            <p><b>场景</b>　表间同步自动化直接新增记录</p>
+            <p><b>做法</b>　写入前按稳定业务编号查重</p>
+            <p><b>结果</b>　缺少查重时产生了 5 个孤立副本</p>
+            <p><b>适用</b>　所有直接新增型同步</p>
+            <p><b>不适用</b>　只追加、允许重复的日志表</p>
+          </div>
+        </div>
+      </div>
+      <div class="kpis" style="--n:1;gap:20px">
+        <div><b>46</b><span>条经验，按标签索引</span></div>
+        <div><b>78</b><span>条偏差档案</span></div>
+        <div><b>5</b><span>期周总结，1 期月度归纳</span></div>
+      </div>
+    </div>
+    <aside class="notes">
+      <p>讲到进化，大家可能会问：这些东西，我在哪看？</p>
+      <p>就在 <strong>Obsidian</strong> 里。大脑本来就是 Obsidian 库里的一个文件夹，AI 写进去的都是普通的 Markdown 文件，打开 Obsidian 就能看。</p>
+      <p>左边是经验文件里的一条：场景、做法、结果、适用、不适用，带着标签。到现在攒了 <strong>46 条经验、78 条偏差档案</strong>，还有 5 期周总结、1 期月度归纳。</p>
+      <p>分工很清楚：<strong>AI 负责写和汇总，我负责在 Obsidian 里搜、翻、看</strong>。想知道某类坑以前踩没踩过，按标签一搜就出来。</p>
+      <p>不用 Obsidian 也行，任何能看 Markdown 的编辑器都可以。我用它，是因为搜索和标签方便。</p>
+      <p>看完这些，有些事还是得我来定。</p>
+    </aside>
+  </section>
+
+  <!-- P30 人在回路 -->
+  <section class="slide p-evolve" data-title="人在回路">
+    <p class="kicker">人在回路里的位置</p>
+    <h2 class="h2">AI 提，<em>我裁</em>；常规的成功不打扰我</h2>
+    <div class="split" style="grid-template-columns:1.35fr 1fr" data-anim="fade-up">
+      <table class="tbl" style="font-size:27px">
+        <tr><th>类型</th><th>待裁定</th><th>我的回复</th></tr>
+        <tr><td>合并建议</td><td>两个看板都含配网成功率，要不要合并</td><td>不合并</td></tr>
+        <tr><td>偏好确认</td><td>周中用 Mac、周末用 Windows</td><td>确认</td></tr>
+        <tr><td>偏好确认</td><td>只在每天 19:00 统一写入</td><td>确认</td></tr>
+        <tr><td>合并建议</td><td>两个指标看板疑似同一个项目</td><td>合并</td></tr>
+        <tr><td>合并建议</td><td>工单导出和工单迁移是同一条链路</td><td>合并</td></tr>
+      </table>
+      <div class="kpis" style="--n:1;gap:20px">
+        <div><b>14 / 14</b><span>上线头三周的待裁定，全部处理完</span></div>
+        <div><b>隔日</b><span>最慢的一项，第二天就定了</span></div>
+      </div>
+    </div>
+    <aside class="notes">
+      <p>左边是待裁定表里的几条，都是真实的。</p>
+      <p>待裁定就三类：<strong>合并建议</strong>，比如两个看板是不是同一个项目；<strong>推断出来的偏好</strong>，要我确认才算；<strong>敏感信息</strong>，比如有密钥在对话里出现过。</p>
+      <p>每一条 AI 都把选项列好，我回一个编号或者一个词就行。</p>
+      <p>效果是：上线头三周 <strong>14 项全部处理完</strong>，最慢的一项第二天就定了。</p>
+      <p>另一条规矩：<strong>常规的成功不通知我</strong>。只有要我处理，或者出了异常，才来找我。不然每天收十条「已完成」，没两天我就不看了。</p>
+      <p>讲到这儿，肯定有人想问：市面上不是有现成的 AI 记忆工具吗？</p>
+    </aside>
+  </section>
+
+  <!-- P32 为什么不用现成的 -->
+  <section class="slide p-evolve" data-title="为什么不用现成的记忆工具">
+    <p class="kicker">为什么不用现成的记忆工具</p>
+    <h2 class="h2">自动录下来的记忆，<em>只能当缓存</em></h2>
+    <div class="kpis" style="--n:3" data-anim="stagger-list">
+      <div><b>100%</b><span>会话覆盖率，录得很全</span></div>
+      <div style="--part:var(--warn)"><b>30%</b><span>摘要里是噪音</span></div>
+      <div style="--part:var(--bad)"><b>45%</b><span>细粒度观察里是噪音</span></div>
+    </div>
+    <div class="rows mt-l" data-anim="fade-up">
+      <div><div><b>当缓存用</b><span>要翻以前的操作细节时，查它</span></div></div>
+      <div><div><b>决定、更正、偏好、项目状态仍走大脑</b><span>两边冲突，以大脑的 STATUS 为准</span></div></div>
+    </div>
+    <aside class="notes">
+      <p>这个问题我自己试过。用的是 claude-mem，一个按钩子实时录会话的记忆工具，和大脑<strong>并行跑了两周</strong>。</p>
+      <p>结果：<strong>会话覆盖率 100%</strong>，一个都没漏，录得很全。但抽样一看，摘要里 <strong>30% 是噪音</strong>，更细的观察记录里 <strong>45% 是噪音</strong>。</p>
+      <p>所以我的结论是：它<strong>只能当缓存</strong>。要翻「上次那个命令怎么跑的」这种操作细节，查它很方便。</p>
+      <p>但决定、更正、偏好、项目状态，这些会改变下次判断的东西，仍然走大脑。两边说得不一样，<strong>以大脑为准</strong>。</p>
+      <p>大脑的日结也是直接读各个 AI 自己的会话记录，不经过它。</p>
+    </aside>
+  </section>
+
+  <!-- P33 踩过的坑 -->
+  <section class="slide top p-evolve" data-title="踩过的坑">
+    <p class="kicker">头三周的复盘</p>
+    <h2 class="h2" style="margin-bottom:30px">踩过的坑，<em>改好的和没改好的</em></h2>
+    <table class="tbl" style="font-size:24px" data-anim="fade-up">
+      <tr><th style="width:17%">坑</th><th style="width:40%">发生了什么</th><th>改法</th><th style="width:9%">状态</th></tr>
+      <tr><td>汇总静默失败</td><td>25 次日汇总成功 15 次；模型通道一挂就是 3 到 8 小时，任务挂死，失败通知也发不出</td><td>汇总改由 Claude Code 定时任务跑；另加 09:00 外部巡检</td><td><span class="pill pill-accent" style="--accent:var(--good)">已改</span></td></tr>
+      <tr><td>反馈回路没转</td><td>周总结 3 次只成功 1 次，月度归纳从没建过</td><td>周、月总结迁到定时任务；缺的几期补生成</td><td><span class="pill pill-accent" style="--accent:var(--good)">已改</span></td></tr>
+      <tr><td>时间窗推进</td><td>日结失败也往前推起点，两天的对话永久丢了</td><td>每个 AI 各自从上次成功处重抓；丢的窗口已补回</td><td><span class="pill pill-accent" style="--accent:var(--good)">已改</span></td></tr>
+      <tr><td>日结要 App 开着</td><td>24 天里 7 天没触发，5 天是晚上开 App 才补跑</td><td>App 关着时，下次打开补跑一次</td><td><span class="pill pill-accent" style="--accent:var(--warn)">部分</span></td></tr>
+      <tr><td>只写不读</td><td>经验和偏差档案记了几十条，开工时没有 AI 读</td><td>开工时补读本项目经验和近 30 天偏差</td><td><span class="pill">待改</span></td></tr>
+      <tr><td>台账膨胀</td><td>约会议室、写转正评价都成了项目，一半项目只有一天历史</td><td>一次性的事归杂项；30 天没动静转暂停</td><td><span class="pill">待改</span></td></tr>
+      <tr><td>偏好混入一次性指令</td><td>「你先帮我把目标写了」进了偏好库</td><td>带「以后、每次、不要再、默认」的原话才进偏好</td><td><span class="pill">待改</span></td></tr>
+    </table>
+    <aside class="notes">
+      <p>这页是上线三周时的复盘，<strong>照原文搬的，没有美化</strong>，没改好的也列着。</p>
+      <p>挑两行讲。</p>
+      <p>第一行，<strong>汇总静默失败</strong>。头三周，凌晨的汇总 25 次只成功了 15 次。模型通道一挂就挂好几个小时，最要命的是，失败通知是写在任务里的，任务自己挂死了，通知也发不出去。<strong>我一直以为它在跑</strong>。现在改成 Claude Code 定时任务，另外加了一个早上九点的外部巡检，不依赖任务自己。</p>
+      <p>倒数第三行，<strong>只写不读</strong>。经验和偏差档案记了几十条，但开工时没有一个 AI 去读。记了等于没记。这条还没改。</p>
+      <p>其他几行大家自己看。教训就一句：<strong>自动化跑起来之后，要有一个不依赖它自己的东西盯着它</strong>。</p>
+    </aside>
+  </section>
+
+  <!-- P34 做对的三件事 -->
+  <section class="slide p-evolve" data-title="做对的三件事">
+    <p class="kicker">也有做对的</p>
+    <h2 class="h2">三件做对了的事</h2>
+    <div class="grid g3" data-anim="stagger-list">
+      <div class="card"><span class="ic">🔁</span><h4>重跑不出重复</h4><p>一次补跑五天、九个文件，台账里没有一行重复。</p></div>
+      <div class="card"><span class="ic">✅</span><h4>裁定当天闭环</h4><p>选项列好，我回一个编号。头三周 14 项全部处理完。</p></div>
+      <div class="card"><span class="ic">🗣️</span><h4>原话直接入库</h4><p>我说过的话不再问我第二遍。</p></div>
+    </div>
+    <aside class="notes">
+      <p>坑讲完，也说说做对的三件事。</p>
+      <p>第一，<strong>重跑不出重复</strong>。汇总挂了好几天，后来一次补跑，五天、九个文件全部补上，台账里没有一行重复。这是一开始就设计好的：每个文件处理过就登记，重跑只处理没登记的。</p>
+      <p>第二，<strong>裁定当天闭环</strong>。前面说了，14 项全部处理完。</p>
+      <p>第三，<strong>原话直接入库</strong>。最早的版本，我说过的偏好它还要再问我一遍确认，我当时原话是「这三条明明在昨天下午的对话中我都是明确要求的，为什么还需要我确认偏好呢？」后来改成原话直接入库。</p>
+      <p>最后一个问题：这一套，我每天要多花多少时间？</p>
+    </aside>
+  </section>
+
+  <!-- P35 每天多花多少时间 -->
+  <section class="slide p-evolve" data-title="每天多花多少时间">
+    <p class="kicker">每天多花多少时间</p>
+    <h2 class="h2">零分钟，一句话，<em>一眼，一个编号</em></h2>
+    <div class="kpis" style="--n:4" data-anim="stagger-list">
+      <div><b>0</b><span>分钟<br>日结全自动</span></div>
+      <div><b>1</b><span>句话<br>换 AI 前「记一下状态」</span></div>
+      <div><b>1</b><span>眼<br>周一看一眼周总结</span></div>
+      <div><b>1</b><span>个编号<br>需要裁定时回一下</span></div>
+    </div>
+    <aside class="notes">
+      <p>算一下账。</p>
+      <p>日结全自动，<strong>零分钟</strong>。换 AI 前说<strong>一句话</strong>。周一看<strong>一眼</strong>周总结。需要裁定的时候回<strong>一个编号</strong>。</p>
+      <p>所以没有多出一套流程。真正多花的，是开工时看那五行简报的十几秒。</p>
+      <p>而这十几秒，换来的是不用再把背景从头讲一遍，不用再被猜错的口径返工。</p>
+      <p>三部分讲完了。现在请大家把电脑打开。</p>
+    </aside>
+  </section>
+
+<!-- ================= 收尾 ================= -->
+
+
+  <!-- P37 现在就装 -->
+  <section class="slide dense p-clone" data-title="现在就装">
+    <p class="kicker">现在就装 · 3 分钟</p>
+    <h2 class="h2">一段话发给你的 AI，<em>它自己装好</em></h2>
+    <div class="split" style="grid-template-columns:2fr 1fr;gap:64px;align-items:center" data-anim="fade-up">
+      <div class="stack" style="display:flex;flex-direction:column;gap:16px">
+        <div class="card" style="padding:22px 32px"><span class="tag">全套：大脑 + 开工简报 + 定时任务</span>
+          <p class="prompt">帮我安装 github.com/yishisanren/ai-brain-starter：按 docs/install.md 装好大脑、技能、指令块和定时任务，大脑放在 ~/brain，装完自检后告诉我怎么开工。</p></div>
+        <div class="card" style="--part:var(--brain);padding:22px 32px"><span class="tag">只要开工简报</span>
+          <p class="prompt">帮我从 github.com/yishisanren/ai-brain-starter 只装开工简报：按 docs/install.md「只装开工简报」一节装好，告诉我怎么用。</p></div>
+        <div class="card" style="--part:var(--evolve);padding:22px 32px"><span class="tag">接通三个 AI 共用插件</span>
+          <p class="prompt">帮我按 github.com/yishisanren/ai-brain-starter 的 docs/share-skills.md，把各个 AI 接通成共用技能：已装的搬进大脑，以后装的默认共用。</p></div>
+      </div>
+      <div style="text-align:center">
+        <img class="qr" src="qr.svg" alt="ai-brain-starter 仓库二维码" style="margin:0 auto">
+        <p class="url mt-m">github.com/yishisanren/<br>ai-brain-starter</p>
+        <p class="take" style="margin-top:32px;text-align:left">装完新开会话，说一句<b>「开工」</b><br>之后每天自动日结、汇总</p>
+      </div>
+    </div>
+    <aside class="notes">
+      <p>扫右边的二维码，或者记这个地址：github 上 yishisanren 下面的 <strong>ai-brain-starter</strong>。</p>
+      <p>装这套东西，<strong>不用复制任何命令</strong>。把左边第一段话，原样发给你的 AI，Claude Code 或者 Codex 都行。它会自己去读仓库里的安装说明，建好大脑，把技能放进大脑、同步给你电脑上的每个 AI，再贴好指令块，建好定时任务：每天晚上七点日结，凌晨两点汇总，周一写周总结，每月一号写月度归纳。最后跑一次自检，告诉你怎么开工。三个 AI 共用插件，这一句也一起接通了。</p>
+      <p>大脑默认放在 ~/brain。想几台电脑共用的，把这句改成你 iCloud 里的一个文件夹就行。几台电脑共用一个大脑，汇总只在一台上跑，其他电脑只建日结，AI 装的时候会自己判断。</p>
+      <p>定时任务建在 Claude 桌面版的定时任务、或者 Codex 的自动化里，app 开着才会跑；到点没开，下次打开补跑。</p>
+      <p>只想要开工简报的，发第二句，它只装一个技能，不用建大脑。</p>
+      <p>只想让三个 AI 共用插件的，发第三句。它会把各个 AI 里原来装的插件列出来，同名不同版的让你选，搬进大脑，同步给 Claude Code、Codex、Hermes，再在指令块里写上一条：以后装插件默认共用。<strong>接通一次就够了</strong>，以后装插件照常跟 AI 说，三个 AI 都能用。</p>
+      <p>装完新开一个会话，说<strong>「开工」</strong>。</p>
+      <p>（现场给三分钟。）没装完的，会后把这段话发给 AI 就行，装不上找我。</p>
+      <p>（提醒自己：别在这台已经装了大脑的电脑上现场跑安装，会把我自己大脑的路径改掉。要演示就用另一台电脑或新建的系统账户。）</p>
+    </aside>
+  </section>
+
+  <!-- P38 三条不要 -->
+  <section class="slide mid" data-title="三句忠告">
+    <p class="kicker">想试的话</p>
+    <h2 class="h2">三句忠告</h2>
+    <div class="rows" data-anim="stagger-list">
+      <div><div><b>先记少，再记多</b><span>一个项目一页状态，只记会改变下次判断的东西</span></div></div>
+      <div><div><b>错的要能划掉</b><span>每条标清楚出处，错了写进「已更正」</span></div></div>
+      <div><div><b>写了要有人读</b><span>AI 开工先读、先复述，你每周看一眼</span></div></div>
+    </div>
+    <p class="take mt-l">回去之后，从一个项目开始：<b>把目标说清楚，把说过的话记下来</b>。</p>
+    <aside class="notes">
+      <p>最后，想试的话，给大家三句忠告，都是我踩过坑换来的。</p>
+      <p>第一，<strong>先记少，再记多</strong>。最直觉的做法是让 AI 把聊天全存下来。我试过，三到四成是噪音，AI 读了反而更乱。一个项目一页状态就够：做到哪、定了什么、你说过的原话。</p>
+      <p>第二，<strong>错的要能划掉</strong>。记忆一共享，一个错结论会同时教给三个 AI，而且一直错下去。所以每条写清楚是查过的、你说的，还是 AI 猜的；发现错了，写进「已更正」，所有 AI 都不再用。</p>
+      <p>第三，<strong>写了要有人读</strong>。我记了 46 条经验，开工时没有一个 AI 去读；凌晨的汇总挂了好几天，我还以为它一直在跑。所以让 AI 开工先读、先复述，你自己每周看一眼。仓库里的版本已经把这条做进去了：开工简报里有一行「这个项目别再犯」，从经验里挑和这次相关的；日结和汇总没按时跑，简报第一行会提醒。</p>
+      <p>回去之后，从一个项目开始：<strong>把目标说清楚，把说过的话记下来</strong>。今天就讲到这里。</p>
+    </aside>
+  </section>
+
+  <!-- P39 问答 -->
+  <section class="slide mid cover" data-title="问答">
+    <div class="fx-bg" data-fx="constellation"></div>
+    <p class="kicker">谢谢</p>
+    <h1 class="h1" style="font-size:136px">分身有术</h1>
+    <p class="sub">让每个 AI 都带着我的大脑工作</p>
+    <div class="row" style="gap:56px;margin-top:56px;align-items:center">
+      <img class="qr" src="qr.svg" alt="ai-brain-starter 仓库二维码" style="width:240px;height:240px">
+      <div>
+        <div class="icons" style="margin-top:0"><span>🧠</span><span>🪞</span><span>🧬</span></div>
+        <p class="url mt-m">github.com/yishisanren/ai-brain-starter</p>
+        <p class="small mt-s">装不上的，会后找我</p>
+      </div>
+    </div>
+    <aside class="notes">
+      <p>谢谢大家。</p>
+      <p>仓库地址还在屏幕上，没扫到的现在可以扫。</p>
+      <p>现在开始提问。几个常被问到的，提前备好答案：</p>
+      <p><strong>Windows 能用吗？</strong>能。脚本只用 Python 自带的库，同一段话发给 AI，它会按 Windows 的方式装。</p>
+      <p><strong>多台电脑怎么共用？</strong>大脑放在会同步的目录里，每台机器设一个自己的机器名。</p>
+      <p><strong>一定要三个 AI 吗？</strong>不用。一个 AI 也有用，换会话就是换分身。</p>
+      <p><strong>汇总谁来做？</strong>装的时候 AI 会在一台电脑上建好汇总的定时任务：凌晨两点日汇总，周一周总结，每月一号月度归纳；其他电脑只建日结。</p>
+      <p><strong>电脑关了、app 没开怎么办？</strong>到点没跑的，下次打开 app 补跑。漏了几天，汇总会把这几天的条目一次补上，不会重复；开工简报第一行也会提醒你。</p>
+    </aside>
+  </section>
+
+</div>
+
+<script src="assets/runtime.js"></script>
+<script src="assets/animations/fx-runtime.js"></script>
+</body>
+</html>
