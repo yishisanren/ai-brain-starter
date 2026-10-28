@@ -6,7 +6,7 @@
 
 | 任务 | 时间 | 建在哪 | 做什么 |
 |---|---|---|---|
-| brain 日结 | 每天 19:00（Claude Code 另加 21:00 补录） | 每台电脑上用的每个 AI 各建一个 | 读当天的会话记录，按项目写进 inbox |
+| brain 日结 | 每天 19:00，21:00 再补录一次（Hermes 只跑 19:00） | 每台电脑上用的每个 AI 各建一个 | 读当天的会话记录，按项目写进 inbox |
 | brain 日汇总 | 每天 02:00 | 所有电脑里只建一处 | 把 inbox 折叠进项目 STATUS、决策、假设、经验、偏好，重建索引，登记待裁定 |
 | brain 周总结 | 每周一 12:30 | 和日汇总同一处 | 写上一周的「给你的一页」：进展、反复出现的问题、停滞的项目、待裁定 |
 | brain 月度归纳 | 每月 1 日 12:30 | 和日汇总同一处 | 写上个月的归纳和修剪建议；1、4、7、10 月加季度附加 |
@@ -55,7 +55,7 @@
 
 ## Codex（app）
 
-1. 在 Codex 的「自动化」里建日结：每天 19:00，本地运行，工作文件夹选大脑文件夹 `<BRAIN_ROOT>`，提示词用下文「日结 · Codex」。你能直接建自动化就建；不能，就把名称、时间、文件夹、提示词原样告诉用户，请用户在自动化页面新建。
+1. 在 Codex 的「自动化」里建日结：每天 19:00 和 21:00 各一次，本地运行，工作文件夹选大脑文件夹 `<BRAIN_ROOT>`，提示词用下文「日结 · Codex」。你能直接建自动化就建；不能，就把名称、时间、文件夹、提示词原样告诉用户，请用户在自动化页面新建。
 2. Codex 默认只能写当前工作文件夹。在 `~/.codex/config.toml` 加上下面这段（已有 `[sandbox_workspace_write]` 就只往 `writable_roots` 里追加），平时在别的文件夹里说「记一下状态」也能写进大脑：
 
    ```toml
@@ -118,7 +118,7 @@ hermes cron create "0 19 * * *" --name "brain 日结" --script brain_hermes_dail
 
 ```
 #brain-daily-run
-你是 <机器> 上的 Codex，执行 brain 日结。只做下面这些事，不修改 brain 下任何其他文件：
+你是 <机器> 上的 Codex，执行 brain 日结。本任务每天 19:00 和 21:00 各触发一次，每次都是增量：只处理上次日结之后的新内容。只做下面这些事，不修改 brain 下任何其他文件：
 1. 读 <HOME>/.agents/skills/brain-note/SKILL.md 和 <HOME>/.agents/skills/brain-note/references/entry-format.md。
 2. 运行：python3 -B <HOME>/.agents/skills/brain-note/scripts/brain_digest.py --agent codex --since auto
 3. 按「日结模式」为摘要里的每个项目写一条类型「日结」的条目，来源写 <机器>/codex，标题时间用 date '+%Y-%m-%d %H:%M' 的结果。项目 id：先对照摘要末尾的「已有项目」清单，同一件事复用已有 id；会话里用户说过的项目名优先（别名换成正式 id）；否则用摘要的「映射项目」；都对不上才按内容总结一个小写字母、数字、连字符的 id，写成「项目：<id>（新）· <一句话>」。维度缺就省略；每条正文不超过 25 行；结论标来源等级。写任何「产物：[文件]」行之前，必须先运行：python3 -B <HOME>/.agents/skills/brain-note/scripts/brain_verify.py <路径1> <路径2>，按输出写「（未入库；brain_verify 核实 <大小> <修改时间>）」；没跑 brain_verify 的产物不写。摘要显示没有会话、且今天还没日结过，只写一行「## <时间> · 日结 | 无项目工作 | 来源：<机器>/codex」；今天已日结过、没有新内容，回复「无新内容」并结束。
