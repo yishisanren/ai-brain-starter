@@ -64,7 +64,7 @@ env -u BRAIN_ROOT -u BRAIN_MACHINE python3 -B ~/.agents/skills/brain-load/script
 
 ## 开始用
 
-新开一个会话，说「开工」。AI 会运行 brain-load 读大脑，用 goal-alignment 给你一份开工简报，你回「确认」它才动手。之后每天 19:00 日结自动把当天的工作写进 inbox，凌晨汇总进项目状态；换 AI 前想立刻接上，就说一句「记一下状态」。在任何一个 AI 里说「开工」，它接最近一条记录的项目，也可以说「开工 <项目名>」指定。
+新开一个会话，说「开工」。AI 会运行 brain-load 读大脑，用 goal-alignment 给你一份开工简报，你确认就立即开工，满 5 分钟无回复就按简报执行。之后每天 19:00 日结自动把当天的工作写进 inbox，凌晨汇总进项目状态；换 AI 前想立刻接上，就说一句「记一下状态」。在任何一个 AI 里说「开工」，它接最近一条记录的项目，也可以说「开工 <项目名>」指定。
 
 ## 只装开工简报
 
@@ -72,7 +72,7 @@ env -u BRAIN_ROOT -u BRAIN_MACHINE python3 -B ~/.agents/skills/brain-load/script
 
 1. 把 `skills/goal-alignment` 复制进 `~/.agents/skills/`（Codex 读这里）和 `~/.claude/skills/`（Claude Code 读这里）。
 2. 把 `prompts/instruction-block.md` 的「全局话题开工门禁」一段贴进 `~/.claude/CLAUDE.md` 和 `~/.codex/AGENTS.md`，其中第二条换成：「每个新的实质执行话题，先使用 goal-alignment 技能，出一份简短开工简报。这是全局触发规则，不受 goal-alignment 默认触发措辞限制。」没有这一段，开工简报只在 AI 自己觉得需要时才出。
-3. 新开会话，交代一件要做的事，AI 先给开工简报，你回「确认」它才动手。
+3. 新开会话，交代一件要做的事，AI 先给开工简报，你确认就立即开工，满 5 分钟无回复就按简报执行。
 
 ## 之后
 
